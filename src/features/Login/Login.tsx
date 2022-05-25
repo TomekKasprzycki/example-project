@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 
 const Login = (): JSX.Element => {
 
-
     useEffect((): void => { document.title = "Strona logowania" }, []);
 
     const user: User = useAppSelector(showActiveUser);
