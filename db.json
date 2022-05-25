@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "id":1,
+            "login": "jan@example.com",
+            "password": "Test1234",
+            "role": "ROLE_ADMIN"
+        },
+        {
+            "id":2,
+            "login": "anna@example.com",
+            "password": "Test1234",
+            "role": "ROLE_USER"
+        },
+        {
+            "id":3,
+            "login": "piotr@example.com",
+            "password": "Test1234",
+            "role": "ROLE_USER"
+        }
+    ]
+}

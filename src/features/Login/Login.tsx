@@ -1,48 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { loginUser, showActiveUser } from './LoginSlice';
 import User from "../../model/User";
 import getUser from "../../services/LoginService";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-
+import { useForm } from 'react-hook-form';
 
 const Login = (): JSX.Element => {
 
-    let history = useHistory();
 
     useEffect((): void => { document.title = "Strona logowania" }, []);
 
     const user: User = useAppSelector(showActiveUser);
     const dispach = useDispatch();
+    const [loginSuccesful, setLoginSuccesfull] = useState(true);
 
-    const handleOnInput = (event: React.FormEvent<HTMLInputElement>): void => {
-        const name = event.currentTarget.name;
-        const value = event.currentTarget.value;
-        if (name === "login") {
-            user.setLogin(value);
-        } else {
-            user.setPassword(value);
-        }
-    }
+   const { register, handleSubmit, formState: { errors }} = useForm<User>();
+
+
 
     console.log(user);
 
-    const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        getUser(user).then(res => dispach(loginUser(res))).catch(() => history.push('/UnsuccesfulLogin'))
+    const formHandler = (data: User): void => {
+        getUser(data)
+            .then(res => {
+                setLoginSuccesfull(true);
+                dispach(loginUser(res));
+            })
+            .catch((err) => {
+                console.log(err);
+                setLoginSuccesfull(false);
+            })
     }
 
     return (
         user ?
             <div className="login-container">
                 <header className="login-header">Podaj swój login i hasło</header>
-                <form className="login-form" onSubmit={handleOnSubmit}>
+                <form className="login-form" onSubmit={handleSubmit(formHandler)}>
                     <label htmlFor="input-login" >Login</label>
-                    <input id="input-login" type="text" name="email" placeholder="Wprowadź swój login" onChange={handleOnInput} />
+                    <input id="input-login" {...register("setLogin", { required: "requierd" })} type="text" placeholder="Wprowadź swój login"  />
                     <label htmlFor="input-password" >Login</label>
-                    <input id="input-password" type="password" name="password" placeholder="Wprowadź swoje hasło" onChange={handleOnInput} />
+                    <input id="input-password" {...register("setPassword", { required: "requierd "}) } type="password" placeholder="Wprowadź swoje hasło"  />
                     <button className="btn login-btn" type="button">Zaloguj</button>
+                    {!loginSuccesful && <p>Podano nieprawidłowy login lub hasło!</p>}
                 </form>
             </div> :
             <div>Jesteś już zalgowany!</div>

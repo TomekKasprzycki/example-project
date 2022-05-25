@@ -2,7 +2,7 @@ import User from "../model/User"
 
 const getUser = async (loginUser: User): Promise<User> => {
 
-    const url1 = `http:localhost:3001/users?email=${loginUser.getLogin()}`;
+    const url1 = `http:localhost:3001/users?login=${loginUser.getLogin()}`;
     const response = await fetch(url1, {
         method: "POST",
         headers: {
