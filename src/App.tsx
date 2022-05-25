@@ -1,4 +1,5 @@
 import Login from './features/Login/Login';
+import MainPage from './features/MainPage/MainPage';
 import {
   HashRouter as Router,
   Route,
@@ -12,6 +13,7 @@ function App() {
   
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path='/main' element={<MainPage />} />
       </Routes>
     </Router>
 

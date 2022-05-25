@@ -34,7 +34,10 @@ const MainPage = (): JSX.Element => {
                     {rates.map((currencyData) => <CurrencyDetails key={currencyData.getCurrency()} data={currencyData} />)}
                 </tbody>
             </table>
+            <button onClick={()=>history.pushState('','','/')}>Przejdź do strony logowania</button>
         </div> :
         <Navigate to="/" />
     )
 }
+
+export default MainPage;
