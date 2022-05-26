@@ -14,13 +14,17 @@ const Login = (): JSX.Element => {
     const dispach = useDispatch();
     const [loginSuccesful, setLoginSuccesfull] = useState(true);
 
-   const { register, handleSubmit, formState: { errors }} = useForm<User>();
+   const { register, handleSubmit, formState: { errors }} = useForm();
 
 
 
     console.log(user);
 
-    const formHandler = (data: User): void => {
+    const formHandler = (data: any) => {
+
+        user.setLogin(data.login);
+        user.setPassword(data.password);
+        
         getUser(data)
             .then(res => {
                 setLoginSuccesfull(true);
@@ -33,18 +37,18 @@ const Login = (): JSX.Element => {
     }
 
     return (
-        user ?
+        user.getLogin() !== "" ?
             <div className="login-container">
                 <header className="login-header">Podaj swój login i hasło</header>
                 <form className="login-form" onSubmit={handleSubmit(formHandler)}>
                     <label htmlFor="input-login" >Login</label>
-                    <input id="input-login" {...register("setLogin", { required: "requierd" })} type="text" placeholder="Wprowadź swój login"  />
+                    <input id="input-login" {...register("login", { required: "requierd" })} type="text" placeholder="Wprowadź swój login"  />
                     <label htmlFor="input-password" >Login</label>
-                    <input id="input-password" {...register("setPassword", { required: "requierd "}) } type="password" placeholder="Wprowadź swoje hasło"  />
+                    <input id="input-password" {...register("password", { required: "requierd "}) } type="password" placeholder="Wprowadź swoje hasło"  />
                     <button className="btn login-btn" type="button">Zaloguj</button>
                     {!loginSuccesful && <p>Podano nieprawidłowy login lub hasło!</p>}
                 </form>
-            </div> :
+            </div> : 
             <div>Jesteś już zalgowany!</div>
     )
 }
