@@ -1,40 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useInsertionEffect, useState } from "react";
 import User from "../../model/User";
 import { useAppSelector } from "../../app/hooks";
 import { showActiveUser } from "../Login/LoginSlice";
 import { Navigate } from "react-router-dom";
-import { getCurrencyRateTable } from '../../services/NbpService';
-import Currency from "../../model/Currency";
-import CurrencyDetails from "./CurrencyDetails/CurrencyDetails";
+import { getMyBooks, getOtherBooks } from '../../services/BookService';
+import Book from "../../model/Book";
+import { Typography, TextField, Button, Grid } from "@mui/material";
+
 
 const MainPage = (): JSX.Element => {
 
     useEffect(() => { document.title = "Strona główna" }, []);
-    const [rates, setRates] = useState(new Array<Currency>());
-    useEffect(() => {
-        getCurrencyRateTable().then(res => setRates(res));
-    })
-
+    const [myBooks, setMyBooks] = useState(new Array<Book>());
+    const [otherBooks, setOtherBooks] = useState(new Array<Book>());
     const user: User = useAppSelector(showActiveUser);
+    useEffect(() => {
+        getMyBooks(user.getLogin()).then(myBooks => setMyBooks(myBooks))
+        getOtherBooks(user.getLogin()).then(otherBooks => setOtherBooks(otherBooks))
+    }, [])
+
+    console.log(otherBooks);
 
     return (
         user.getLogin() !== "" ? 
-        <div>
-            <h1>Tabela kursów NBP</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nazwa waluty</th>
-                        <th>Kod waluty</th>
-                        <th>Cena kupna</th>
-                        <th>Cena sprzedaży</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rates.map((currencyData) => <CurrencyDetails key={currencyData.getCurrency()} data={currencyData} />)}
-                </tbody>
-            </table>
-        </div> :
+        <Grid container spacing={5}>
+            <Grid item xs={6}>
+                <Typography variant="h1" align="center" sx={{ fontSize: 50 }}>Moje książki</Typography>
+            </Grid>
+            <Grid item xs={6}>
+                <Typography variant="h1" align="center" sx={{ fontSize: 50 }}>Inne książki</Typography>
+            </Grid>
+        </Grid>
+        :
         <Navigate to="/" />
     )
 }
+
+export default MainPage;
