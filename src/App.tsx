@@ -1,6 +1,7 @@
 import Login from './features/Login/Login';
 import MainPage from './features/MainPage/MainPage';
 import Header from './features/Header.ts/Header';
+import PageNotFound from './features/PageNotFound/PageNotFound';
 import {
   HashRouter as Router,
   Route,
@@ -8,22 +9,26 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Grid from '@mui/material/Grid/Grid';
+import { useState } from 'react';
+import User from './model/User';
 
-function App() {
+const App: React.FC = () => {
+
+  const [user, setUser] = useState(new User(0, "", "", "", ""));
+
   return (
     <Grid container spacing={10}>
       <Router>
         <Grid item xs={12}>
-          <Header />
+          <Header setUser={setUser} user={user } />
         </Grid>
-        <Routes>
-          <Grid item xs={12}>
-            <Route path="/" element={<Login />} />
-          </Grid>
-          <Grid item xs={12}>
-            <Route path='/main' element={<MainPage />} />
-          </Grid>
-        </Routes>
+        <Grid item xs={12}>
+          <Routes>
+            <Route path='/' element={<MainPage user={user} />} />
+            <Route path="/login" element={<Login setUser={setUser} user={user} />} />
+            <Route path='*' element={<PageNotFound />} />
+          </Routes>
+        </Grid>
       </Router>
     </Grid>
 
