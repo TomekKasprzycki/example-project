@@ -10,14 +10,16 @@ class Book {
     private category: Category;
     private score: number;
     private owner: User;
+    private bookLented: boolean;
 
-    constructor(id: number, title: string, authors: Author[], category: Category, score: number, owner: User) {
+    constructor(id: number, title: string, authors: Author[], category: Category, score: number, owner: User, bookLented: boolean) {
         this.id = id;
         this.title = title;
         this.authors = authors;
         this.category = category;
         this.score = score;
         this.owner = owner;
+        this.bookLented = bookLented;
     }
 
     public setId(id: number): void {
@@ -66,6 +68,14 @@ class Book {
 
     public getOwner(): User {
         return this.owner;
+    }
+
+    public setBookLented(bookLented: boolean): void {
+        this.bookLented = bookLented;
+    }
+
+    public isBookLented(): boolean {
+        return this.bookLented;
     }
 
 }

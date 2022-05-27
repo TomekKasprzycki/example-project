@@ -9,7 +9,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import BookRow from "./BookRow";
 
-const Books = (data: Book[]): JSX.Element => {
+const Books: React.FC<{data: Book[]}> = (props): JSX.Element => {
+
+    console.log(props.data)
 
     const columns: any[] = [
         { id: 'title', label: 'Tytuł', minWidth: 170 },
@@ -29,6 +31,12 @@ const Books = (data: Book[]): JSX.Element => {
         {
             id: 'owner',
             label: 'Właściciel',
+            minWidth: 170,
+            align: 'right'
+        },
+        {
+            id: 'owner',
+            label: 'Dostępność',
             minWidth: 170,
             align: 'right'
         },
@@ -52,7 +60,7 @@ const Books = (data: Book[]): JSX.Element => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((book) => {
+                        {props.data.map((book) => {
                             return (
                                 <BookRow key={book.getId()} book={book} columns={columns} />
                             );
