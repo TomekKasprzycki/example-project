@@ -1,5 +1,5 @@
 import Book from "../model/Book";
-
+import { mapBooks } from './../Converters/BookConverter';
 
 export const getMyBooks = async (login: string): Promise<Book[]> => {
 
@@ -10,9 +10,9 @@ export const getMyBooks = async (login: string): Promise<Book[]> => {
         }
     })
     const data = await response.json();
-    const myBookArray = data.map((el: any) => new Book(el.id, el.title, el.authors, el.category, el.score, el. owner, el.bookLented ))
-    console.log(myBookArray)
-    const myBooksList: Book[] = myBookArray.filer((book: Book) => book.getOwner().getLogin() === login);
+    const myBookArray = mapBooks(data);
+
+    const myBooksList: Book[] = myBookArray.filter((book: Book) => book.getOwner().getLogin() === login);
 
     return myBooksList;
 }
@@ -26,7 +26,9 @@ export const getOtherBooks = async (login: string): Promise<Book[]> => {
         }
     })
     const data = await response.json();
-    const othersBooksList: Book[] = data.books.filer((book: Book) => book.getOwner().getLogin() !== login);
+    const otherBookArray = mapBooks(data);
+
+    const othersBooksList: Book[] = otherBookArray.filter((book: Book) => book.getOwner().getLogin() !== login);
 
     return othersBooksList;
 }
@@ -40,8 +42,6 @@ export const getAllBooks = async (): Promise<Book[]> => {
         }
     })
     const data = await response.json();
-    const allBookArray = data.map((el: any) => new Book(el.id, el.title, el.authors, el.category, el.score, el. owner, el.bookLented ))
-    console.log(allBookArray)
 
-    return allBookArray;
+    return mapBooks(data);
 }

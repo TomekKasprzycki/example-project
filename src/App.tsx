@@ -2,6 +2,7 @@ import Login from './features/Login/Login';
 import MainPage from './features/MainPage/MainPage';
 import Header from './features/Header.ts/Header';
 import PageNotFound from './features/PageNotFound/PageNotFound';
+import AddBook from './features/AddBook/AddBook';
 import {
   HashRouter as Router,
   Route,
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path='/' element={<MainPage user={user} />} />
             <Route path="/login" element={<Login setUser={setUser} user={user} />} />
+            <Route path="/addbook" element={<AddBook user={user} />} />
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Grid>

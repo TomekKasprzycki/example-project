@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { 
-    TableRow, 
-    TableCell, 
-    Typography 
+import {
+    TableRow,
+    TableCell,
+    Typography
 } from '@mui/material';
 import {
 
@@ -22,17 +22,14 @@ const BookRow: React.FC<{ book: Book, columns: any[] }> = (props): JSX.Element =
         bookAuthors.forEach(author => {
             let result: string = "";
             for (key in author) {
-                if (typeof (key) !== 'number') {
-                    result = result + " " + author[key];
-                }
+                if (typeof author[key] !== "number") {
+                    result = result + " " + (typeof author[key] !== "undefined" ? author[key] : "");
+                };
             }
             authorsNames.push(result);
         })
         setAuthors(authorsNames);
-    })
-
-    console.log(props.book);
-    console.log(`Tuuu ${typeof (props.book.getTitle())}`);
+    }, [])
 
     return (
         <TableRow hover role="checkbox" tabIndex={-1} key={props.book.getId()}>
@@ -52,7 +49,7 @@ const BookRow: React.FC<{ book: Book, columns: any[] }> = (props): JSX.Element =
                 {props.book.getOwner().getName()}
             </TableCell>
             <TableCell key={props.columns[5].id} align={props.columns[5].align}>
-                {props.book.isBookLented() ? "Wypożyczona" : "Dostępna" }
+                {props.book.isBookLented() ? "Wypożyczona" : "Dostępna"}
             </TableCell>
         </TableRow>
     )

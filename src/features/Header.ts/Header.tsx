@@ -19,7 +19,7 @@ import { logoutUser } from './../../services/LoginService';
 const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
 
   useEffect(() => {
-    setAuth(props.user.getLogin() === '')
+    setAuth(props.user.getId() === 0)
   }, [props.user])
 
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
     setAnchorEl(null);
   };
 
-  const handleMyBookItem = () => {
-    navigate("/mybooks");
+  const handleAddBookItem = () => {
+    navigate("/addbook");
   }
 
   const handleMyAccountItem = () => {
@@ -60,7 +60,7 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {auth && (
+          {!auth && (
             <div>
               <IconButton
                 size="large"
@@ -88,7 +88,7 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
                 onClose={handleClose}
               >
                 <MenuList>
-                  <MenuItem onClick={handleMyBookItem}>Moje książki</MenuItem>
+                  <MenuItem onClick={handleAddBookItem}>Dodaj książkę</MenuItem>
                   <MenuItem onClick={handleMyAccountItem}>Moje konto</MenuItem>
                   <MenuItem onClick={handleLogoutItem}>Wyloguj</MenuItem>
                 </MenuList>

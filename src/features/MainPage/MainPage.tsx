@@ -19,16 +19,15 @@ const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
     const [myBooks, setMyBooks] = useState(new Array<Book>());
     const [otherBooks, setOtherBooks] = useState(new Array<Book>());
     // const user: User = useAppSelector(showActiveUser);
+    console.log(user)
     useEffect(() => {
-        if(user.getId() === 0){
-        getAllBooks().then(allBooks => setOtherBooks(allBooks))
+        if (user.getId() === 0) {
+            getAllBooks().then(allBooks => setOtherBooks(allBooks));
         } else {
-        getMyBooks(user.getLogin()).then(myBooks => setMyBooks(myBooks))
-        getOtherBooks(user.getLogin()).then(otherBooks => setOtherBooks(otherBooks))
+            getMyBooks(user.getLogin()).then(myBooks => setMyBooks(myBooks));
+            getOtherBooks(user.getLogin()).then(otherBooks => setOtherBooks(otherBooks));
         }
-    }, [])
-
-    console.log(otherBooks); //piersze renderowanie z pustą tablicą
+    }, [user])
 
     return (
         <Grid container spacing={5} sx={{ padding: 2 }}>
@@ -41,18 +40,20 @@ const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
             <Grid item xs={12}>
                 <Typography variant="body1">Eaque illum, repellat officia excepturi vero commodi exercitationem ipsam consequatur numquam autem tempora accusamus dolor nemo voluptatem hic ratione perferendis id placeat.</Typography>
             </Grid>
-            <Fade in={!showBooks} timeout={1000}>
-                <Grid container spacing={2}>
-                    {user.getId() !== 0 && <Grid item xs={6}>
-                        <Typography variant="h1" align="center" sx={{ fontSize: 20 }}>Moje książki</Typography>
-                        <Books data={myBooks} />
-                    </Grid>}
-                    <Grid item xs={6}>
-                        <Typography variant="h1" align="center" sx={{ fontSize: 20 }}>Inne książki</Typography>
-                        <Books data={otherBooks} />
+            <Grid item xs={12}>
+                <Fade in={!showBooks} timeout={1000}>
+                    <Grid container spacing={2}>
+                        {user.getId() !== 0 && <Grid item xs={6}>
+                            <Typography variant="h1" align="center" sx={{ fontSize: 20 }}>Moje książki</Typography>
+                            <Books data={myBooks} />
+                        </Grid>}
+                        <Grid item xs={user.getId() === 0 ? 12 : 6}>
+                            <Typography variant="h1" align="center" sx={{ fontSize: 20 }}>Inne książki</Typography>
+                            <Books data={otherBooks} />
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Fade>
+                </Fade>
+            </Grid>
         </Grid>
 
     )

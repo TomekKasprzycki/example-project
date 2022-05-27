@@ -33,9 +33,10 @@ const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
 
         getUser(user)
             .then(res => {
-                if(res.getId() !== 0){
+                if (res.getId() !== 0) {
                     setLoginSuccesfull(true);
                     props.setUser(res);
+                    navigate("/");
                 } else {
                     setLoginSuccesfull(false);
                 }
@@ -44,8 +45,6 @@ const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
                 console.log(err);
                 setLoginSuccesfull(false);
             })
-
-        if (loginSuccesful) navigate("/");
 
     }
 
@@ -73,35 +72,35 @@ const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
                     <Typography variant="h4">Podaj swój login i hasło</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                <form onSubmit={handleSubmit(formHandler)} justifi-content="center" >
-                    <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
-                        <TextField {...register("login", { required: "requierd" })}
-                            id="input-login"
-                            type="text"
-                            inputRef={inputRef}
-                            onChange={inputLoginChangeHandler}
-                            variant="outlined"
-                            label="Insert user name"
-                            inputProps={{ style: { textAlign: "center" } }}
-                            helperText={errors.username?.type === 'required' && "Username is requierd"}
-                        />
-                    </Grid>
-                    <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
-                        <TextField {...register("password", { required: "requierd" })}
-                            id="input-password"
-                            type="text"
-                            inputRef={inputRef}
-                            onChange={inputPasswordChangeHandler}
-                            variant="outlined"
-                            label="Insert password"
-                            inputProps={{ style: { textAlign: "center" } }}
-                            helperText={errors.username?.type === 'required' && "Password is requierd"}
-                        />
-                    </Grid>
-                    <Grid item xs={12} textAlign="center">
-                        <Button type="submit" disabled={!loginInputState && !passwordInputState} variant="contained" >Zaloguj</Button>
-                    </Grid>
-                </form>
+                    <form onSubmit={handleSubmit(formHandler)} justifi-content="center" >
+                        <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
+                            <TextField {...register("login", { required: "requierd" })}
+                                id="input-login"
+                                type="text"
+                                inputRef={inputRef}
+                                onChange={inputLoginChangeHandler}
+                                variant="outlined"
+                                label="Insert user name"
+                                inputProps={{ style: { textAlign: "center" } }}
+                                helperText={errors.username?.type === 'required' && "Username is requierd"}
+                            />
+                        </Grid>
+                        <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
+                            <TextField {...register("password", { required: "requierd" })}
+                                id="input-password"
+                                type="password"
+                                inputRef={inputRef}
+                                onChange={inputPasswordChangeHandler}
+                                variant="outlined"
+                                label="Insert password"
+                                inputProps={{ style: { textAlign: "center" } }}
+                                helperText={errors.username?.type === 'required' && "Password is requierd"}
+                            />
+                        </Grid>
+                        <Grid item xs={12} textAlign="center">
+                            <Button type="submit" disabled={!loginInputState && !passwordInputState} variant="contained" >Zaloguj</Button>
+                        </Grid>
+                    </form>
                 </Grid>
             </Grid> :
             <div>Jesteś już zalgowany!</div>

@@ -1,4 +1,5 @@
 import Category from "../model/Category";
+import { mapCategories } from './../Converters/CategoryConverter';
 
 const getAllCategories = async(): Promise<Category[]> => {
 
@@ -11,7 +12,7 @@ const getAllCategories = async(): Promise<Category[]> => {
 
     const data = await response.json();
 
-    return data;
+    return mapCategories(data);
 }
 
 export { getAllCategories };

@@ -1,7 +1,8 @@
-import User from "../model/User"
+import User from "../model/User";
+import { mapUser } from './../Converters/UserConverter';
 
 const getUser = async (loginUser: User): Promise<User> => {
-    
+
     const url1 = 'http://localhost:3001/users?login=';
     const response = await fetch(url1 + loginUser.getLogin(), {
         method: "GET",
@@ -10,12 +11,15 @@ const getUser = async (loginUser: User): Promise<User> => {
         }
     })
 
-    let user: User = new User(0,"","","","");
-    if(response.ok) {
-    user = await response.json();
-    } 
+    let user: any[];
+    if (response.status === 200) {
+        user = await response.json();
+    } else {
+        user = new Array<User>();
+        user.push(new User(0,"","","",""));
+    }
 
-    return user;
+    return mapUser(user[0]);
 }
 
 const logoutUser = async (user: User): Promise<void> => {
@@ -31,4 +35,4 @@ const logoutUser = async (user: User): Promise<void> => {
 
 }
 
-export {getUser, logoutUser};
+export { getUser, logoutUser };

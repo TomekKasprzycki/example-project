@@ -11,8 +11,6 @@ import BookRow from "./BookRow";
 
 const Books: React.FC<{data: Book[]}> = (props): JSX.Element => {
 
-    console.log(props.data)
-
     const columns: any[] = [
         { id: 'title', label: 'Tytuł', minWidth: 170 },
         { id: 'cathegory', label: 'Kategoria', minWidth: 100 },
@@ -35,7 +33,7 @@ const Books: React.FC<{data: Book[]}> = (props): JSX.Element => {
             align: 'right'
         },
         {
-            id: 'owner',
+            id: 'bookLend',
             label: 'Dostępność',
             minWidth: 170,
             align: 'right'
