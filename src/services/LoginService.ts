@@ -1,25 +1,23 @@
 import User from "../model/User";
 import { mapUser } from './../Converters/UserConverter';
 
-const getUser = async (loginUser: User): Promise<User> => {
+const getUser = async (loginUser: User): Promise<string> => {
 
-    const url1 = 'http://localhost:3001/users?login=';
-    const response = await fetch(url1 + loginUser.getLogin(), {
-        method: "GET",
+    const url1 = 'http://localhost:8080/api/authentication';
+    const response = await fetch(url1, {
+        method: "POST",
         headers: {
-            "content-type": "application/json"
-        }
+            "Content-Type": "application/json",
+            "TYPE":"Login"
+        },
+        body: JSON.stringify(loginUser)
     })
+    const headers = response.headers;
+   
 
-    let user: any[];
-    if (response.status === 200) {
-        user = await response.json();
-    } else {
-        user = new Array<User>();
-        user.push(new User(0,"","","",""));
-    }
+    console.log(response)
 
-    return mapUser(user[0]);
+    return response.json();
 }
 
 const logoutUser = async (user: User): Promise<void> => {

@@ -19,7 +19,6 @@ const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
     const [myBooks, setMyBooks] = useState(new Array<Book>());
     const [otherBooks, setOtherBooks] = useState(new Array<Book>());
     // const user: User = useAppSelector(showActiveUser);
-    console.log(user)
     useEffect(() => {
         if (user.getId() === 0) {
             getAllBooks().then(allBooks => setOtherBooks(allBooks));
@@ -32,7 +31,7 @@ const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
     return (
         <Grid container spacing={5} sx={{ padding: 2 }}>
             <Grid item xs={12}>
-                <Typography variant="h2">Witaj sąsiedzkiej bibliotece</Typography>
+                <Typography variant="h2">Witaj w sąsiedzkiej bibliotece</Typography>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant="subtitle1">Lorem ipsum dolor sit amet consectetur adipisicing elit</Typography>

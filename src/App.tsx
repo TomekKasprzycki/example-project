@@ -15,7 +15,7 @@ import User from './model/User';
 
 const App: React.FC = () => {
 
-  const [user, setUser] = useState(new User(0, "", "", "", ""));
+  const [user, setUser] = useState(new User(0, "", "", "", "","",false));
 
   return (
     <Grid container spacing={10}>

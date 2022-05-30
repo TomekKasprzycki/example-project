@@ -51,7 +51,7 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
 
   const handleLogoutItem = () => {
     logoutUser(props.user);
-    props.setUser(new User(0, "", "", "", ""))
+    props.setUser(new User(0, "", "", "", "","",false))
     navigate("/");
   }
 

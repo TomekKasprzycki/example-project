@@ -3,7 +3,7 @@ import { mapCategories } from './../Converters/CategoryConverter';
 
 const getAllCategories = async(): Promise<Category[]> => {
 
-    const response = await fetch('http://localhost:3001/category', {
+    const response = await fetch('http://localhost:8080/api/categories/anonymous/getAll', {
         method: "GET",
         headers: {
             "content-type": "application/json"

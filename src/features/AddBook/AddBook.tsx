@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import User from "../../model/User";
 import Category from "../../model/Category";
 import Author from "../../model/Author";
+import Book from "./../../model/Book";
 import AddAuthor from './AddAuthor';
 import {
     TextField,
@@ -19,6 +20,8 @@ import {
 import { getAllCategories } from './../../services/CategoryService';
 import { getAllAuthors } from './../../services/AuthorService';
 import { Theme, useTheme } from "@mui/material/styles";
+import { mapAuthorFromName } from "../../Converters/AuthorConverter";
+import { mapCategoryById } from "../../Converters/CategoryConverter";
 
 
 
@@ -32,12 +35,24 @@ const AddBook: React.FC<{ user: User }> = (props) => {
     const [chosenCategory, setChosenCategory] = useState('');
     const theme = useTheme();
 
+
     useEffect(() => {
         getAllCategories().then(categories => setCategories(categories));
         getAllAuthors().then(authors => setAuthors(authors));
     }, [])
 
     const formHandler = (data: any): void => {
+        
+        const newBook = new Book(0, 
+                                 data.title, 
+                                 mapAuthorFromName(data.authors, authors),
+                                 mapCategoryById(data.category, categories),
+                                 0,
+                                 props.user,
+                                 false
+                                 )
+
+        console.log(newBook)
 
     }
 
@@ -63,6 +78,7 @@ const AddBook: React.FC<{ user: User }> = (props) => {
         setAddNewAuthor(true);
     }
 
+
     return (
         <Grid container spacing={10} >
             <Grid item xs={12} textAlign="center">
@@ -71,7 +87,7 @@ const AddBook: React.FC<{ user: User }> = (props) => {
             <Grid item xs={12}>
                 <form onSubmit={handleSubmit(formHandler)} justifi-content="center" >
                     <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
-                        <TextField {...register("login", { required: "requierd" })}
+                        <TextField {...register("title", { required: "requierd" })}
                             id="input-title"
                             type="text"
                             variant="outlined"
@@ -98,7 +114,7 @@ const AddBook: React.FC<{ user: User }> = (props) => {
                     <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
                         <FormControl sx={{ m: 1, width: 300 }}>
                             <InputLabel id="multiple-name-label">Autor (autorzy)</InputLabel>
-                            <Select
+                            <Select {...register("authors", { required: "requierd" })}
                                 labelId="multiple-name-label"
                                 id="multiple-name-input"
                                 multiple
@@ -120,7 +136,9 @@ const AddBook: React.FC<{ user: User }> = (props) => {
                         </FormControl>
                         {addNewAuthor && <AddAuthor setAddNewAuthor={setAddNewAuthor} />}
                     </Grid>
-
+                    <Grid item xs={12} textAlign="center">
+                        <Button type="submit" variant="contained" >Zapisz książkę</Button>
+                    </Grid>
 
                 </form>
             </Grid>

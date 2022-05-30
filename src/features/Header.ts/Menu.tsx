@@ -26,7 +26,7 @@ const Menu: React.FC<{ setShowMenu: any, setUser: any, user: User }> = (props) =
 
     const handleLogoutItem = () => {
         logoutUser(props.user);
-        props.setUser(new User(0, "", "", "", ""))
+        props.setUser(new User(0, "", "", "", "","",false))
         navigate("/");
         props.setShowMenu(false);
     }

@@ -31,20 +31,20 @@ const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
         user.setLogin(data.login);
         user.setPassword(data.password);
 
-        getUser(user)
-            .then(res => {
-                if (res.getId() !== 0) {
-                    setLoginSuccesfull(true);
-                    props.setUser(res);
-                    navigate("/");
-                } else {
-                    setLoginSuccesfull(false);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                setLoginSuccesfull(false);
-            })
+        getUser(user).then(res => console.log(res))
+            // .then(res => {
+            //     if (res.getId() !== 0) {
+            //         setLoginSuccesfull(true);
+            //         props.setUser(res);
+            //         navigate("/");
+            //     } else {
+            //         setLoginSuccesfull(false);
+            //     }
+            // })
+            // .catch((err) => {
+            //     console.log(err);
+            //     setLoginSuccesfull(false);
+            // })
 
     }
 

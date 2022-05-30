@@ -6,7 +6,9 @@ const mapUser = (object: any): User => {
                     object.login,
                     object.name,
                     object.password,
-                    object.role);
+                    object.password2,
+                    object.role,
+                    object.active)
 }
 
 const mapUsers = (array: any[]): User[] => {

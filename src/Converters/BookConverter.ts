@@ -11,7 +11,7 @@ const mapBook = (object: any): Book => {
                     mapCategory(object.category),
                     object.score,
                     mapUser(object.owner),
-                    object.bookLented);
+                    object.bookLended);
 }
 
 const mapBooks = (array: any[]): Book[] => {

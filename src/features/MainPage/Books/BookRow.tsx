@@ -4,9 +4,6 @@ import {
     TableCell,
     Typography
 } from '@mui/material';
-import {
-
-} from '@mui/icons-material';
 import User from "../../../model/User";
 import Book from "../../../model/Book";
 import Author from "../../../model/Author";
@@ -17,19 +14,14 @@ const BookRow: React.FC<{ book: Book, columns: any[] }> = (props): JSX.Element =
     useEffect(() => {
         const bookAuthors: Author[] = props.book.getAuthors();
         const authorsNames: string[] = new Array<string>();
-        let key: keyof Author;
 
+        let result: string = "";
         bookAuthors.forEach(author => {
-            let result: string = "";
-            for (key in author) {
-                if (typeof author[key] !== "number") {
-                    result = result + " " + (typeof author[key] !== "undefined" ? author[key] : "");
-                };
-            }
+            result = author.getFirstName() + `${typeof author.getSecondName() !== 'undefined' ? ' ' + author.getSecondName() : '' }` + " " + author.getLastName();
             authorsNames.push(result);
-        })
-        setAuthors(authorsNames);
-    }, [])
+            })
+            setAuthors(authorsNames);
+        },[])
 
     return (
         <TableRow hover role="checkbox" tabIndex={-1} key={props.book.getId()}>
@@ -49,7 +41,7 @@ const BookRow: React.FC<{ book: Book, columns: any[] }> = (props): JSX.Element =
                 {props.book.getOwner().getName()}
             </TableCell>
             <TableCell key={props.columns[5].id} align={props.columns[5].align}>
-                {props.book.isBookLented() ? "Wypożyczona" : "Dostępna"}
+                {props.book.isBookLended() ? "Wypożyczona" : "Dostępna"}
             </TableCell>
         </TableRow>
     )

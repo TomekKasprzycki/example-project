@@ -3,14 +3,24 @@ class User {
     private login: string;
     private name: string;
     private password: string;
+    private password2: string;
     private role: string;
+    private active: boolean;
 
-    constructor(id: number, login: string, name:string, password: string, role:string) {
+    constructor(id: number, 
+                login: string, 
+                name:string, 
+                password: string, 
+                password2: string,
+                role:string,
+                active: boolean) {
         this.id = id;
         this.login = login;
         this.name = name;
         this.password = password;
+        this.password2 = password2;
         this.role = role;
+        this.active = active;
     }
 
     public getId(): number {
@@ -33,6 +43,10 @@ class User {
         this.password = password;
     }
 
+    public setPassword2(password2: string): void{
+        this.password2 = password2;
+    }
+
     public setRole(role: string): void {
         this.role = role;
     }
@@ -43,6 +57,14 @@ class User {
 
     public getRole(): string {
         return this.role;
+    }
+
+    public setActive(active: boolean): void {
+        this.active = active;
+    }
+
+    public isActive(): boolean {
+        return this.active;
     }
 
 }

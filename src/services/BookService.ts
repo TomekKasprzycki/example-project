@@ -3,7 +3,7 @@ import { mapBooks } from './../Converters/BookConverter';
 
 export const getMyBooks = async (login: string): Promise<Book[]> => {
 
-    const response: Response = await fetch('http://localhost:3001/books', {
+    const response: Response = await fetch('http://localhost:8080/api/books/mybooks?limit=3&offset=0', {
         method: "GET",
         headers: {
             "content-type": "application/json"
@@ -19,7 +19,7 @@ export const getMyBooks = async (login: string): Promise<Book[]> => {
 
 export const getOtherBooks = async (login: string): Promise<Book[]> => {
 
-    const response = await fetch('http://localhost:3001/books', {
+    const response = await fetch('http://localhost:8080/api/books/otherbooks?limit=3&offset=0', {
         method: "GET",
         headers: {
             "content-type": "application/json"
@@ -35,13 +35,15 @@ export const getOtherBooks = async (login: string): Promise<Book[]> => {
 
 export const getAllBooks = async (): Promise<Book[]> => {
 
-    const response = await fetch('http://localhost:3001/books', {
+    const response = await fetch('http://localhost:8080/api/books/anonymous/showbooks?limit=10&offset=0', {
         method: "GET",
         headers: {
-            "content-type": "application/json"
+            "Content-Type": "application/json"
         }
     })
     const data = await response.json();
+
+    console.log(response.headers)
 
     return mapBooks(data);
 }
