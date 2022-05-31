@@ -11,16 +11,16 @@ import {
   MenuList
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import User from "../../model/User";
+import User from "./../../model/User";
 import { useNavigate } from "react-router-dom";
-import { logoutUser } from './../../services/LoginService';
+import { logoutUser } from './../../services/UserService';
 
 
 const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
 
-  useEffect(() => {
-    setAuth(props.user.getId() === 0)
-  }, [props.user])
+  // useEffect(() => {
+  //   setAuth(props.user.getId() === 0)
+  // }, [props.user])
 
   const navigate = useNavigate();
 
@@ -28,10 +28,8 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
     navigate('/login')
   }
 
-  const [auth, setAuth] = React.useState(true);
+  // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,8 +58,8 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {!auth && (
-            <div>
+          {/* {!auth && ( */}
+            {/* <div> */}
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -93,7 +91,7 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
                   <MenuItem onClick={handleLogoutItem}>Wyloguj</MenuItem>
                 </MenuList>
               </Menu>
-            </div>)}
+            {/* </div>)} */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 10 }}>
             Sąsiedzka biblioteka
           </Typography>

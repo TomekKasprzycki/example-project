@@ -47,3 +47,17 @@ export const getAllBooks = async (): Promise<Book[]> => {
 
     return mapBooks(data);
 }
+
+export const addMyBook = async(book: Book, token: string): Promise<boolean> => {
+
+    const response = await fetch('http://localhost:8080/api/books/addbook', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        body: JSON.stringify(book)
+    })
+    
+    return response.ok
+}

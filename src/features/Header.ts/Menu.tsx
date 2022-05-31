@@ -7,7 +7,7 @@ import {
     MenuList
 } from '@mui/material';
 import User from '../../model/User';
-import { logoutUser } from './../../services/LoginService';
+import { logoutUser } from '../../services/UserService';
 
 
 const Menu: React.FC<{ setShowMenu: any, setUser: any, user: User }> = (props) => {
