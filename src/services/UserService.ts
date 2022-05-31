@@ -17,7 +17,7 @@ const loginUser = async (loginUser: User): Promise<string> => {
     return token;
 }
 
-const logoutUser = async (user: User): Promise<void> => {
+const logoutUser = async (user: User, token: string): Promise<void> => {
 
     const url = 'http://localhost:8080/api/authentication/logout';
     const response = await fetch(url, {
@@ -25,7 +25,7 @@ const logoutUser = async (user: User): Promise<void> => {
         headers: {
             "content-type": "application/json",
             "TYPE":"Logout",
-            "Authorization":"" //token
+            "Authorization": token
         }
     })
 

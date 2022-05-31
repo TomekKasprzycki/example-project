@@ -14,20 +14,26 @@ const Menu: React.FC<{ setShowMenu: any, setUser: any, user: User }> = (props) =
 
     const navigate = useNavigate();
 
-    const handleMyBookItem = () => {
+    const token: string = '';
+    const handleMyBookItem = (): void => {
         navigate("/mybooks");
         props.setShowMenu(false);
     }
 
-    const handleMyAccountItem = () => {
+    const handleMyAccountItem = (): void => {
         navigate("/myaccount");
         props.setShowMenu(false);
     }
 
-    const handleLogoutItem = () => {
-        logoutUser(props.user);
+    const handleLogoutItem = (): void => {
+        logoutUser(props.user, token);
         props.setUser(new User(0, "", "", "", "","",false))
         navigate("/");
+        props.setShowMenu(false);
+    }
+
+    const handleBookLendItem = (): void => {
+        navigate("/lendbook");
         props.setShowMenu(false);
     }
 
@@ -38,8 +44,8 @@ const Menu: React.FC<{ setShowMenu: any, setUser: any, user: User }> = (props) =
             <Paper>
                 <MenuList>
                     <MenuItem onClick={handleMyBookItem}>Moje książki</MenuItem>
-                    <MenuItem onClick={handleMyAccountItem}>Moje konto</MenuItem>
-
+                    <MenuItem onClick={handleBookLendItem}>Wypożycz książkę</MenuItem>
+                    <MenuItem onClick={handleMyAccountItem}>Wypożycz książkę</MenuItem>
                     <MenuItem onClick={handleLogoutItem}>Wyloguj</MenuItem>
                 </MenuList>
             </Paper>

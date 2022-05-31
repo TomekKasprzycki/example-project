@@ -80,7 +80,7 @@ const AddBook: React.FC<{ user: User }> = (props) => {
 
 
     return (
-        <Grid container spacing={10} >
+        <Grid container spacing={6} >
             <Grid item xs={12} textAlign="center">
                 <Typography variant="h4">Poniżej możesz wprowadzić dane swojej książki</Typography>
             </Grid>
@@ -92,19 +92,20 @@ const AddBook: React.FC<{ user: User }> = (props) => {
                             type="text"
                             variant="outlined"
                             label="Podaj tytuł książki"
+                            sx={{ width: 300 }}
                             inputProps={{ style: { textAlign: "center" } }}
                             helperText={errors.username?.type === 'required' && "Username is requierd"}
                         />
                     </Grid>
                     <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
-                        <FormControl sx={{ m: 1, width: 300 }}>
+                        <FormControl >
                             <InputLabel id="input-category-select">Kategoria</InputLabel>
                             <Select {...register("category", { required: "requierd" })}
                                 labelId="input-category-select"
                                 id="input-category-select"
                                 value={chosenCategory}
                                 input={<OutlinedInput label="Kategoria" />}
-                                sx={{ width: 200 }}
+                                sx={{ width: 300 }}
                                 onChange={handleChangeCategory}
                             >
                                 {categories.map((category) => { return <MenuItem key={category.getId()} value={category.getId()}>{category.getName()}</MenuItem> })}
@@ -112,13 +113,14 @@ const AddBook: React.FC<{ user: User }> = (props) => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
-                        <FormControl sx={{ m: 1, width: 300 }}>
+                        <FormControl >
                             <InputLabel id="multiple-name-label">Autor (autorzy)</InputLabel>
                             <Select {...register("authors", { required: "requierd" })}
                                 labelId="multiple-name-label"
                                 id="multiple-name-input"
                                 multiple
                                 value={chosenAuthor}
+                                sx={{ width: 300 }}
                                 onChange={handleChangeAuthors}
                                 input={<OutlinedInput label="Autor (autorzy)" />}
                             >
@@ -134,13 +136,13 @@ const AddBook: React.FC<{ user: User }> = (props) => {
                             </Select>
                             <Button type="button" onClick={handleAddAuthorBtn}>Dodaj autora do listy</Button>
                         </FormControl>
-                        {addNewAuthor && <AddAuthor setAddNewAuthor={setAddNewAuthor} />}
                     </Grid>
                     <Grid item xs={12} textAlign="center">
                         <Button type="submit" variant="contained" >Zapisz książkę</Button>
                     </Grid>
 
                 </form>
+                        {addNewAuthor && <AddAuthor setAddNewAuthor={setAddNewAuthor} />}
             </Grid>
         </Grid>
     )

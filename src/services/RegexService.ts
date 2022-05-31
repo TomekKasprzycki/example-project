@@ -7,7 +7,7 @@ const checkPassword = (password: string): boolean => {
 
 const checkEmail = (email: string): boolean => {
 
-    const pattern: RegExp = /^([a-zA-Z0-9_]+)(\.[a-zA-Z0-9_]+)*(@)([a-zA-Z0-9]+)(\-{1})([a-zA-Z0-9])*\.[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$/;
+    const pattern: RegExp = /^([a-zA-Z0-9_]+)(\.[a-zA-Z0-9_]+)*(@)([a-zA-Z0-9]+)(\-{1})?([a-zA-Z0-9])*\.[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$/;
 
     return pattern.test(email);
 }

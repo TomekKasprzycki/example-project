@@ -11,8 +11,8 @@ import Books from "./Books/Books";
 
 const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
 
+    const token: string = '';
     const [showBooks, setShowBooks] = useState(false);
-
     const user: User = props.user;
 
     useEffect(() => { document.title = "Strona główna" }, []);
@@ -21,10 +21,10 @@ const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
     // const user: User = useAppSelector(showActiveUser);
     useEffect(() => {
         if (user.getId() === 0) {
-            getAllBooks().then(allBooks => setOtherBooks(allBooks));
+            getAllBooks(10,0).then(allBooks => setOtherBooks(allBooks));
         } else {
-            getMyBooks(user.getLogin()).then(myBooks => setMyBooks(myBooks));
-            getOtherBooks(user.getLogin()).then(otherBooks => setOtherBooks(otherBooks));
+            getMyBooks(token,10,0).then(myBooks => setMyBooks(myBooks));
+            getOtherBooks(token,10,0).then(otherBooks => setOtherBooks(otherBooks));
         }
     }, [user])
 
@@ -44,11 +44,11 @@ const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
                     <Grid container spacing={2}>
                         {user.getId() !== 0 && <Grid item xs={6}>
                             <Typography variant="h1" align="center" sx={{ fontSize: 20 }}>Moje książki</Typography>
-                            <Books data={myBooks} />
+                            <Books data={myBooks} forLend={false} />
                         </Grid>}
                         <Grid item xs={user.getId() === 0 ? 12 : 6}>
                             <Typography variant="h1" align="center" sx={{ fontSize: 20 }}>Inne książki</Typography>
-                            <Books data={otherBooks} />
+                            <Books data={otherBooks} forLend={false} />
                         </Grid>
                     </Grid>
                 </Fade>

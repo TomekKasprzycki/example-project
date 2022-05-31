@@ -4,8 +4,9 @@ import Header from './features/Header.ts/Header';
 import PageNotFound from './features/PageNotFound/PageNotFound';
 import AddBook from './features/AddBook/AddBook';
 import Registration from './features/Registration/Registration';
+import LendBook from './features/LendingPage/LendBook';
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Routes
 } from 'react-router-dom';
@@ -15,6 +16,8 @@ import { useState } from 'react';
 import User from './model/User';
 
 const App: React.FC = () => {
+
+
 
   const [user, setUser] = useState(new User(0, "", "", "", "","",false));
 
@@ -30,6 +33,7 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login setUser={setUser} user={user} />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/addbook" element={<AddBook user={user} />} />
+            <Route path="/lendbook" element={<LendBook />} />
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </Grid>

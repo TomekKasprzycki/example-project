@@ -22,6 +22,7 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
   //   setAuth(props.user.getId() === 0)
   // }, [props.user])
 
+  const token: string = ''; // do usunięcia potem
   const navigate = useNavigate();
 
   const handleOnClickLoginBtn = (): void => {
@@ -48,9 +49,13 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
   }
 
   const handleLogoutItem = () => {
-    logoutUser(props.user);
-    props.setUser(new User(0, "", "", "", "","",false))
+    logoutUser(props.user, token);
+    props.setUser(new User(0, "", "", "", "", "", false))
     navigate("/");
+  }
+
+  const handleBookLendItem = (): void => {
+    navigate("/lendbook");
   }
 
 
@@ -59,39 +64,40 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
       <AppBar position="static">
         <Toolbar>
           {/* {!auth && ( */}
-            {/* <div> */}
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuList>
-                  <MenuItem onClick={handleAddBookItem}>Dodaj książkę</MenuItem>
-                  <MenuItem onClick={handleMyAccountItem}>Moje konto</MenuItem>
-                  <MenuItem onClick={handleLogoutItem}>Wyloguj</MenuItem>
-                </MenuList>
-              </Menu>
-            {/* </div>)} */}
+          {/* <div> */}
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuList>
+              <MenuItem onClick={handleAddBookItem}>Dodaj książkę</MenuItem>
+              <MenuItem onClick={handleBookLendItem}>Wypożycz książkę</MenuItem>
+              <MenuItem onClick={handleMyAccountItem}>Moje konto</MenuItem>
+              <MenuItem onClick={handleLogoutItem}>Wyloguj</MenuItem>
+            </MenuList>
+          </Menu>
+          {/* </div>)} */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 10 }}>
             Sąsiedzka biblioteka
           </Typography>

@@ -104,7 +104,7 @@ const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
                     <Typography variant="h5">Nie masz jesz konta? Załóż je szybko!</Typography>
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                    <Typography variant="body1">Pamiętaj, książki czekają na wypożyczenie! twoje też!</Typography>
+                    <Typography variant="body1">Pamiętaj, książki czekają na wypożyczenie! Twoje też!</Typography>
                 </Grid>
                 <Grid item xs={12} textAlign="center">
                     <Button type="button" variant="outlined" onClick={() => { navigate("/registration") }}>Załóż konto</Button>
