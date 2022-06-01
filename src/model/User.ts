@@ -27,6 +27,10 @@ class User {
         return this.id;
     }
 
+    public setId(id: number): void {
+        this.id = id;
+    }
+
     public setLogin(login: string): void {
         this.login = login;
     }

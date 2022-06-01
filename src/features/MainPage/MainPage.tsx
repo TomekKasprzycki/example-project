@@ -1,24 +1,25 @@
 import React, { useEffect, useInsertionEffect, useState } from "react";
 import User from "../../model/User";
-// import { useAppSelector } from "../../app/hooks";
-// import { showActiveUser } from "../Login/LoginSlice";
+import { useAppSelector } from "../../app/hooks";
+import { showActiveUser } from "../Login/LoginSlice";
 import { Navigate } from "react-router-dom";
 import { getMyBooks, getOtherBooks, getAllBooks } from '../../services/BookService';
 import Book from "../../model/Book";
 import { Typography, TextField, Button, Grid, Fade } from "@mui/material";
 import Books from "./Books/Books";
+import { showCurrentToken } from "../Login/TokenSlice";
 
 
-const MainPage: React.FC<{ user: User }> = (props): JSX.Element => {
-
-    const token: string = '';
-    const [showBooks, setShowBooks] = useState(false);
-    const user: User = props.user;
+const MainPage: React.FC = (): JSX.Element => {
 
     useEffect(() => { document.title = "Strona główna" }, []);
+    const token: string = useAppSelector(showCurrentToken).currentToken;
+    const user: User = useAppSelector(showActiveUser).activeUser;
+    
+    const [showBooks, setShowBooks] = useState(false);
     const [myBooks, setMyBooks] = useState(new Array<Book>());
     const [otherBooks, setOtherBooks] = useState(new Array<Book>());
-    // const user: User = useAppSelector(showActiveUser);
+
     useEffect(() => {
         if (user.getId() === 0) {
             getAllBooks(10,0).then(allBooks => setOtherBooks(allBooks));

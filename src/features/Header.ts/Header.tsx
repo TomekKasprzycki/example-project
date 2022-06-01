@@ -12,24 +12,30 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import User from "./../../model/User";
+import { logoutUser } from "./../../services/UserService";
 import { useNavigate } from "react-router-dom";
-import { logoutUser } from './../../services/UserService';
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { removeToken, showCurrentToken } from "../Login/TokenSlice";
+import { showActiveUser, removeUseFromState } from "../Login/LoginSlice";
 
 
-const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
+const Header: React.FC = (): JSX.Element => {
 
-  // useEffect(() => {
-  //   setAuth(props.user.getId() === 0)
-  // }, [props.user])
+  const token: string = useAppSelector(showCurrentToken).currentToken;
+  const user: User = useAppSelector(showActiveUser).activeUser;
+  const dispach = useAppDispatch();
 
-  const token: string = ''; // do usunięcia potem
+  useEffect(() => {
+    setAuth(user.getId() === 0)
+  }, [user])
+
   const navigate = useNavigate();
 
   const handleOnClickLoginBtn = (): void => {
     navigate('/login')
   }
 
-  // const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,20 +48,30 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
 
   const handleAddBookItem = () => {
     navigate("/addbook");
+    handleClose();
   }
 
   const handleMyAccountItem = () => {
     navigate("/myaccount");
+    handleClose();
   }
 
-  const handleLogoutItem = () => {
-    logoutUser(props.user, token);
-    props.setUser(new User(0, "", "", "", "", "", false))
+  const handleLogoutButton = () => {
+    logoutUser(token).then(res => {
+      if(res){
+        dispach(removeUseFromState())
+        dispach(removeToken())
+      }
+    }).then(() => navigate("/"))
+    
+    ;
     navigate("/");
+    handleClose();
   }
 
   const handleBookLendItem = (): void => {
     navigate("/lendbook");
+    handleClose();
   }
 
 
@@ -63,8 +79,7 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {/* {!auth && ( */}
-          {/* <div> */}
+          {!auth && 
           <IconButton
             size="large"
             aria-label="account of current user"
@@ -74,7 +89,7 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
             color="inherit"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton>}
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -94,14 +109,14 @@ const Header: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
               <MenuItem onClick={handleAddBookItem}>Dodaj książkę</MenuItem>
               <MenuItem onClick={handleBookLendItem}>Wypożycz książkę</MenuItem>
               <MenuItem onClick={handleMyAccountItem}>Moje konto</MenuItem>
-              <MenuItem onClick={handleLogoutItem}>Wyloguj</MenuItem>
             </MenuList>
           </Menu>
-          {/* </div>)} */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 10 }}>
             Sąsiedzka biblioteka
           </Typography>
-          {props.user.getLogin() === '' && <Button color="inherit" onClick={handleOnClickLoginBtn}>Login</Button>}
+          {auth ? 
+          <Button color="inherit" onClick={handleOnClickLoginBtn}>Zaloguj się</Button>:
+          <Button color="inherit" onClick={handleLogoutButton}>Wyloguj się</Button>}
         </Toolbar>
       </AppBar>
     </Box>

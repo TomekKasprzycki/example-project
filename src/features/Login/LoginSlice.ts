@@ -1,26 +1,32 @@
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { RootState } from '../../app/store';
-// import User from '../../model/User';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
+import User from '../../model/User';
 
-// const initialState: User = new User(0,"","","","");
+interface loginSliceState {
+    activeUser: User;
+}
 
-// export const loginSlice = createSlice({
-//     name: 'activeUser',
-//     initialState,
-//     reducers: {
-//       loginUser: (state, action:PayloadAction<User>) => {
-//         state = action.payload;
-//       },
-//       logoutUser: (state) => {
-//         state = initialState;
-//       }
-//     }
-//   });
+const initialState: loginSliceState = {
+    activeUser: new User(0,"","","","","",false)
+}
 
-//   export const { loginUser, logoutUser } = loginSlice.actions;
+export const loginSlice = createSlice({
+    name: 'activeUser',
+    initialState,
+    reducers: {
+        loginUserToState: (state, action:PayloadAction<User>) => {
+        state.activeUser = action.payload;
+      },
+      removeUseFromState: (state) => {
+        state.activeUser = initialState.activeUser;
+      }
+    }
+  });
 
-//   export const showActiveUser = (state: RootState) => state.activeUser;
+  export const { loginUserToState, removeUseFromState } = loginSlice.actions;
+
+  export const showActiveUser = (state: RootState) => state.activeUser;
   
-//   export default loginSlice.reducer;
+  export default loginSlice.reducer;
 
-export {}
+// export {}

@@ -1,27 +1,25 @@
-import { tokenToString } from "typescript";
 import User from "../model/User";
+import axios from "axios";
 
 const loginUser = async (loginUser: User): Promise<string> => {
 
-    const url1 = 'http://localhost:8080/api/authentication/anonymous/login';
-    const response = await fetch(url1, {
-        method: "POST",
+    const response = await axios.post('http://localhost:8080/api/authentication/anonymous/login', loginUser, {
         headers: {
             "Content-Type": "application/json",
             "TYPE":"Login"
         },
-        body: JSON.stringify(loginUser)
     })
-    const token: any = response.headers.get("Authorization");
-
+    console.log(response)
+    const token = response.data
+    console.log(token)
+    
     return token;
 }
 
-const logoutUser = async (user: User, token: string): Promise<void> => {
+const logoutUser = async (token: string): Promise<boolean> => {
 
     const url = 'http://localhost:8080/api/authentication/logout';
-    const response = await fetch(url, {
-        method: "POST",
+    const response = await axios.post(url, {
         headers: {
             "content-type": "application/json",
             "TYPE":"Logout",
@@ -29,23 +27,20 @@ const logoutUser = async (user: User, token: string): Promise<void> => {
         }
     })
 
+    return response.status === 200;
 }
 
 const registerUser = async(newUser: User ): Promise<boolean> => {
 
     const url1 = 'http://localhost:8080/api/authentication/anonymous/registration';
-    const response = await fetch(url1, {
-        method: "POST",
+    const response = await axios.post(url1, newUser, {
         headers: {
             "Content-Type": "application/json",
             "TYPE":"Registration"
-        },
-        body: JSON.stringify(newUser)
+        }
     })
-
-    console.log(response)
     
-    return response.ok;
+    return response.status === 200;
 }
 
 export { loginUser, logoutUser, registerUser };

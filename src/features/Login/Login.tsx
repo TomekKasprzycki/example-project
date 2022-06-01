@@ -2,23 +2,23 @@ import {
     Button, Grid, TextField, Typography
 } from '@mui/material';
 import React, { useEffect, useRef, useState } from "react";
-// import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
-// import { useAppSelector } from "../../app/hooks";
-// import { loginUser, showActiveUser } from './LoginSlice';
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { loginUserToState, showActiveUser } from './LoginSlice';
 import User from "../../model/User";
 import { loginUser } from "../../services/UserService";
+import { addToken, showCurrentToken } from './TokenSlice';
 
-const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
+const Login: React.FC = (): JSX.Element => {
 
     useEffect((): void => { document.title = "Strona logowania" }, []);
     const [passwordInputState, setPasswordInputState] = useState(false);
     const [loginInputState, setLoginInputState] = useState(false)
     const inputRef = useRef<null | HTMLInputElement>(null);
-    const user: User = props.user;
-    // const user: User = useAppSelector(showActiveUser);
-    // const dispach = useDispatch();
+    const user: User = useAppSelector(showActiveUser).activeUser;
+    const token: string = useAppSelector(showCurrentToken).currentToken;
+    const dispach = useAppDispatch();
     const [loginSuccesful, setLoginSuccesfull] = useState(false);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -28,21 +28,31 @@ const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
         user.setLogin(data.login);
         user.setPassword(data.password);
 
-        // loginUser(user).then(res => console.log(res))
-        // .then(res => {
-        //     if (res.getId() !== 0) {
-        //         setLoginSuccesfull(true);
-        //         props.setUser(res);
-        //         navigate("/");
-        //     } else {
-        //         setLoginSuccesfull(false);
-        //     }
-        // })
-        // .catch((err) => {
-        //     console.log(err);
-        //     setLoginSuccesfull(false);
-        // })
+        loginUser(user)
+        .then(res => {
+            if(res){
+            dispach(addToken(res))
+            readToken(res);
+            setLoginSuccesfull(true)
+            navigate("/");
+        }
+        })
+        .catch((err) => {
+            console.log(err);
+            setLoginSuccesfull(false);
+        })
 
+    }
+
+    const readToken = (token: string): void => {
+        const tokenData: any = JSON.parse(atob(token.split('.')[1]));
+        const loggedUser = new User(0, "", "","","","",true)
+        loggedUser.setId(tokenData.id);
+        loggedUser.setLogin(tokenData.email);
+        loggedUser.setName(tokenData.name);
+        loggedUser.setRole(tokenData.role);
+        dispach(loginUserToState(loggedUser))
+        //props.setUser(loggedUser);
     }
 
     const inputLoginChangeHandler = (): void => {
@@ -85,7 +95,7 @@ const Login: React.FC<{ setUser: any, user: User }> = (props): JSX.Element => {
                         <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
                             <TextField {...register("password", { required: "requierd" })}
                                 id="input-name"
-                                type="name"
+                                type="password"
                                 inputRef={inputRef}
                                 onChange={inputPasswordChangeHandler}
                                 variant="outlined"

@@ -22,11 +22,14 @@ import { getAllAuthors } from './../../services/AuthorService';
 import { Theme, useTheme } from "@mui/material/styles";
 import { mapAuthorFromName } from "../../Converters/AuthorConverter";
 import { mapCategoryById } from "../../Converters/CategoryConverter";
+import { useAppSelector } from "../../app/hooks";
+import { showActiveUser } from "../Login/LoginSlice";
 
 
 
-const AddBook: React.FC<{ user: User }> = (props) => {
+const AddBook: React.FC = () => {
 
+    const user: User = useAppSelector(showActiveUser).activeUser;
     const [categories, setCategories] = useState(new Array<Category>());
     const [addNewAuthor, setAddNewAuthor] = useState(false);
     const [authors, setAuthors] = useState(new Array<Author>());
@@ -48,7 +51,7 @@ const AddBook: React.FC<{ user: User }> = (props) => {
                                  mapAuthorFromName(data.authors, authors),
                                  mapCategoryById(data.category, categories),
                                  0,
-                                 props.user,
+                                 user,
                                  false
                                  )
 

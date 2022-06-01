@@ -59,7 +59,7 @@ const BookRow: React.FC<{ book: Book, columns: any[], forLend: boolean }> = (pro
                 {bookOnScreen.getOwner().getName()}
             </TableCell>
             <TableCell key={props.columns[5].id} align={props.columns[5].align}>
-                {props.forLend ? <Button type="button" onClick={handleBookLendButton}> Wypożycz</Button>
+                {props.forLend ? <Button type="button" onClick={handleBookLendButton}>Pożycz</Button>
                 : bookOnScreen.isBookLended() ? "Wypożyczona" : "Dostępna"}
             </TableCell>
         </TableRow>

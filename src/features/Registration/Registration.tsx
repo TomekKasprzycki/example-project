@@ -169,7 +169,7 @@ return (
             :
             <Grid container spacing={6} textAlign="center">
                 <Grid item xs={12} >
-                    <Typography variant="h4" >Doskonale! Twoje konto zostałożone.</Typography>
+                    <Typography variant="h4" >Doskonale! Twoje konto zostało założone.</Typography>
                 </Grid>
                 <Grid item xs={12} textAlign="center">
                     <Typography variant="body1" >Na podany przez Ciebie adres /<span>{newUser.getLogin()}</span>/ został wysłany link aktywacyjny.</Typography>
