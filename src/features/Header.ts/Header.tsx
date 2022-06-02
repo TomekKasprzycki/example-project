@@ -58,13 +58,13 @@ const Header: React.FC = (): JSX.Element => {
 
   const handleLogoutButton = () => {
     logoutUser(token).then(res => {
-      if(res){
+      if (res) {
         dispach(removeUseFromState())
         dispach(removeToken())
       }
     }).then(() => navigate("/"))
-    
-    ;
+
+      ;
     navigate("/");
     handleClose();
   }
@@ -74,22 +74,26 @@ const Header: React.FC = (): JSX.Element => {
     handleClose();
   }
 
+  const handleButtonMainPage = (): void => {
+    navigate('/');
+  }
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {!auth && 
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>}
+          {!auth &&
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>}
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -111,12 +115,15 @@ const Header: React.FC = (): JSX.Element => {
               <MenuItem onClick={handleMyAccountItem}>Moje konto</MenuItem>
             </MenuList>
           </Menu>
+
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 10 }}>
-            Sąsiedzka biblioteka
+            <Button type="button" onClick={handleButtonMainPage} sx={{ color: "white", fontSize: 20 }}>
+              Sąsiedzka biblioteka
+            </Button>
           </Typography>
-          {auth ? 
-          <Button color="inherit" onClick={handleOnClickLoginBtn}>Zaloguj się</Button>:
-          <Button color="inherit" onClick={handleLogoutButton}>Wyloguj się</Button>}
+          {auth ?
+            <Button color="inherit" onClick={handleOnClickLoginBtn}>Zaloguj się</Button> :
+            <Button color="inherit" onClick={handleLogoutButton}>Wyloguj się</Button>}
         </Toolbar>
       </AppBar>
     </Box>

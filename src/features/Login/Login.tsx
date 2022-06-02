@@ -19,7 +19,6 @@ const Login: React.FC = (): JSX.Element => {
     const user: User = useAppSelector(showActiveUser).activeUser;
     const token: string = useAppSelector(showCurrentToken).currentToken;
     const dispach = useAppDispatch();
-    const [loginSuccesful, setLoginSuccesfull] = useState(false);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -29,30 +28,30 @@ const Login: React.FC = (): JSX.Element => {
         user.setPassword(data.password);
 
         loginUser(user)
-        .then(res => {
-            if(res){
-            dispach(addToken(res))
-            readToken(res);
-            setLoginSuccesfull(true)
-            navigate("/");
-        }
-        })
-        .catch((err) => {
-            console.log(err);
-            setLoginSuccesfull(false);
-        })
+            .then(res => {
+                if (res) {
+                    console.log(res)
+                    let token = `Bearer ${res}`
+                    console.log(token)
+                    dispach(addToken(token))
+                    readToken(res);
+                    navigate("/");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
 
     }
 
     const readToken = (token: string): void => {
         const tokenData: any = JSON.parse(atob(token.split('.')[1]));
-        const loggedUser = new User(0, "", "","","","",true)
+        const loggedUser = new User(0, "", "", "", "", "", true)
         loggedUser.setId(tokenData.id);
         loggedUser.setLogin(tokenData.email);
         loggedUser.setName(tokenData.name);
         loggedUser.setRole(tokenData.role);
         dispach(loginUserToState(loggedUser))
-        //props.setUser(loggedUser);
     }
 
     const inputLoginChangeHandler = (): void => {

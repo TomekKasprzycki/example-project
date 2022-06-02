@@ -9,30 +9,42 @@ import {
     Fade
 } from '@mui/material';
 import { useForm } from "react-hook-form";
+import { useAppSelector } from "../../app/hooks";
+import { showCurrentToken } from "../Login/TokenSlice";
+import { saveAuthor } from "./../../services/AuthorService";
 
-const AddAuthor: React.FC<{ setAddNewAuthor: any }> = (props) => {
+const AddAuthor: React.FC<{ setAddNewAuthor: any, setAuthorHasBeenAdded: any }> = (props) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [newAuthor, setNewAuthor] = useState<Author>(new Author(0, "", "", ""));
     const [isFirstNameGiven, setIsFirstNameGiven] = useState(false);
     const [isLastNameGiven, setIsLastNameGiven] = useState(false);
     const inputRef = useRef<null | HTMLInputElement>(null);
+    const [isAuthorAdded, setIsAuthorAdded] = useState(false);
+    const token: string = useAppSelector(showCurrentToken).currentToken;
 
     useEffect(() => {
         
     })
 
+    const closeAfter2000 = () => {
+        setTimeout(() => {
+            props.setAddNewAuthor(false)}, 2000)
+    }
+
     const formHandler = (data: any): void => {
+        console.log(data)
         const createdAuthor = new Author(0,"","","");
         createdAuthor.setFirstName(data.firstName);
         createdAuthor.setSecondName(data.secondName);
         createdAuthor.setLastName(data.lastName);
-
-        setNewAuthor(createdAuthor);
-        props.setAddNewAuthor(false)
+        console.log(createdAuthor)
+ 
+        saveAuthor(createdAuthor, token).then(res => setIsAuthorAdded(res))
+            props.setAuthorHasBeenAdded(true)
+        closeAfter2000();
     }
 
-    const handleFirstNameInput = (event: any): void => {
+    const handleFirstNameInput = (): void => {
         if (inputRef.current?.value !== '') {
             setIsFirstNameGiven(true)
         } else {
@@ -40,7 +52,7 @@ const AddAuthor: React.FC<{ setAddNewAuthor: any }> = (props) => {
         }
     }
 
-    const handleLastNameInput = (event: any): void => {
+    const handleLastNameInput = (): void => {
         if (inputRef.current?.value !== '') {
             setIsLastNameGiven(true)
         } else {
@@ -49,6 +61,7 @@ const AddAuthor: React.FC<{ setAddNewAuthor: any }> = (props) => {
     }
 
     return (
+        !isAuthorAdded ?
         <Fade in={true} timeout={1000}>
             <Box sx={{
                 width: 500,
@@ -108,7 +121,12 @@ const AddAuthor: React.FC<{ setAddNewAuthor: any }> = (props) => {
                     </Grid>
                 </form>
             </Box>
-        </Fade>
+        </Fade>:
+        <Grid container spacing={6}>
+            <Grid item xs={12} textAlign="center">
+                <Typography variant="h4">Super, udało się dodać autora!</Typography>
+            </Grid>
+        </Grid>
     )
 }
 

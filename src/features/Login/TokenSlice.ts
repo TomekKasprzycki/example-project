@@ -17,7 +17,7 @@ export const tokenSlice = createSlice({
         state.currentToken = action.payload;
       },
         removeToken: (state) => {
-        state.currentToken = initialState.currentToken;
+        state.currentToken = '';
       }
     }
   });

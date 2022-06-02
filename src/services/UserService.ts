@@ -1,7 +1,7 @@
 import User from "../model/User";
 import axios from "axios";
 
-const loginUser = async (loginUser: User): Promise<string> => {
+export const loginUser = async (loginUser: User): Promise<string> => {
 
     const response = await axios.post('http://localhost:8080/api/authentication/anonymous/login', loginUser, {
         headers: {
@@ -16,10 +16,11 @@ const loginUser = async (loginUser: User): Promise<string> => {
     return token;
 }
 
-const logoutUser = async (token: string): Promise<boolean> => {
+export const logoutUser = async (token: string): Promise<boolean> => {
+    console.log("Wyloguje")
 
     const url = 'http://localhost:8080/api/authentication/logout';
-    const response = await axios.post(url, {
+    const response = await axios.get(url, {
         headers: {
             "content-type": "application/json",
             "TYPE":"Logout",
@@ -30,7 +31,7 @@ const logoutUser = async (token: string): Promise<boolean> => {
     return response.status === 200;
 }
 
-const registerUser = async(newUser: User ): Promise<boolean> => {
+export const registerUser = async(newUser: User ): Promise<boolean> => {
 
     const url1 = 'http://localhost:8080/api/authentication/anonymous/registration';
     const response = await axios.post(url1, newUser, {
@@ -43,4 +44,3 @@ const registerUser = async(newUser: User ): Promise<boolean> => {
     return response.status === 200;
 }
 
-export { loginUser, logoutUser, registerUser };

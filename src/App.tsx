@@ -22,32 +22,34 @@ import { showActiveUser } from './features/Login/LoginSlice';
 const App: React.FC = () => {
 
   const user: User = useAppSelector(showActiveUser).activeUser;
+  console.log(user)
+
 
   return (
-    <Grid container spacing={10}>
-      <Router>
-        <Grid item xs={12}>
-          <Header />
+        <Grid container spacing={10}>
+          <Router>
+            <Grid item xs={12}>
+              <Header />
+            </Grid>
+            <Grid item xs={12}>
+              <Routes>
+                <Route path='/' element={<MainPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/registration" element={<Registration />} />
+                <Route path="/addbook" element={
+                  <ProtectedRoute hasRole={user.getRole()} outlet={<AddBook />} login={<Login />} />
+                } />
+                <Route path="/lendbook" element={
+                  <ProtectedRoute hasRole={user.getRole()} outlet={<LendBook />} login={<Login />} />
+                } />
+                <Route path="/adminPanel" element={
+                  <AdminRoute hasRole={user.getRole()} outlet={<AdminPanel />} login={<Login />} />
+                } />
+                <Route path='*' element={<PageNotFound />} />
+              </Routes>
+            </Grid>
+          </Router>
         </Grid>
-        <Grid item xs={12}>
-          <Routes>
-            <Route path='/' element={<MainPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/addbook" element={
-              <ProtectedRoute hasRole={user.getRole()} outlet={<AddBook />} login={<Login />} />
-            } />
-            <Route path="/lendbook" element={
-              <ProtectedRoute hasRole={user.getRole()} outlet={<LendBook />} login={<Login />} />
-            } />
-            <Route path="/adminPanel" element={
-              <AdminRoute hasRole={user.getRole()} outlet={<AdminPanel />} login={<Login />} />
-            } />
-            <Route path='*' element={<PageNotFound />} />
-          </Routes>
-        </Grid>
-      </Router>
-    </Grid>
   );
 }
 

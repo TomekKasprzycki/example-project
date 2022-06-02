@@ -2,7 +2,7 @@ import axios from "axios";
 import Category from "../model/Category";
 import { mapCategories } from './../Converters/CategoryConverter';
 
-const getAllCategories = async(): Promise<Category[]> => {
+export const getAllCategories = async(): Promise<Category[]> => {
 
     const response = await axios.get('http://localhost:8080/api/categories/anonymous/getAll', {
         headers: {
@@ -14,5 +14,3 @@ const getAllCategories = async(): Promise<Category[]> => {
 
     return mapCategories(data);
 }
-
-export { getAllCategories };
