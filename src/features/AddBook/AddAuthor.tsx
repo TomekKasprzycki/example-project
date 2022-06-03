@@ -22,17 +22,13 @@ const AddAuthor: React.FC<{ setAddNewAuthor: any, setAuthorHasBeenAdded: any }> 
     const [isAuthorAdded, setIsAuthorAdded] = useState(false);
     const token: string = useAppSelector(showCurrentToken).currentToken;
 
-    useEffect(() => {
-        
-    })
-
-    const closeAfter2000 = () => {
+    const closeAfter2000 = (): void => {
         setTimeout(() => {
             props.setAddNewAuthor(false)}, 2000)
     }
 
     const formHandler = (data: any): void => {
-        console.log(data)
+
         const createdAuthor = new Author(0,"","","");
         createdAuthor.setFirstName(data.firstName);
         createdAuthor.setSecondName(data.secondName);

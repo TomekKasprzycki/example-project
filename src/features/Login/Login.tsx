@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { loginUserToState, showActiveUser } from './LoginSlice';
 import User from "../../model/User";
 import { loginUser } from "../../services/UserService";
-import { addToken, showCurrentToken } from './TokenSlice';
+import { addToken } from './TokenSlice';
 
 const Login: React.FC = (): JSX.Element => {
 
@@ -17,7 +17,6 @@ const Login: React.FC = (): JSX.Element => {
     const [loginInputState, setLoginInputState] = useState(false)
     const inputRef = useRef<null | HTMLInputElement>(null);
     const user: User = useAppSelector(showActiveUser).activeUser;
-    const token: string = useAppSelector(showCurrentToken).currentToken;
     const dispach = useAppDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();

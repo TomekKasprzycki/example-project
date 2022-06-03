@@ -12,7 +12,7 @@ import { useAppSelector } from "../../../app/hooks";
 import { showCurrentToken } from "../../Login/TokenSlice";
 import { setNewRegister } from "../../../services/LendingRegisterService"; 
 
-const BookRow: React.FC<{ book: Book, columns: any[], forLend: boolean, setIsBookLended: any }> = (props): JSX.Element => {
+const BookRow: React.FC<{ id:number, book: Book, columns: any[], forLend: boolean, setIsBookLended: any }> = (props): JSX.Element => {
 
     const token: string = useAppSelector(showCurrentToken).currentToken;
     const [authors, setAuthors] = useState(new Array<string>());
@@ -38,12 +38,14 @@ const BookRow: React.FC<{ book: Book, columns: any[], forLend: boolean, setIsBoo
         },[])
 
         const handleBookLendButton = () => {
+            setShouldBookBeUdated(true);
             props.book.setBookLended(true);
             props.setIsBookLended(true);
-            setShouldBookBeUdated(true);
         }
 
     return (
+        <>
+        {!shouldBookBeUpdated ?
         <TableRow hover role="checkbox" tabIndex={-1} key={props.book.getId()}>
             <TableCell key={props.columns[0].id} align={props.columns[0].align}>
                 {props.book.getTitle()}
@@ -64,7 +66,9 @@ const BookRow: React.FC<{ book: Book, columns: any[], forLend: boolean, setIsBoo
                 {props.forLend ? <Button type="button" onClick={handleBookLendButton}>Pożycz</Button>
                 : props.book.isBookLended() ? "Wypożyczona" : "Dostępna"}
             </TableCell>
-        </TableRow>
+        </TableRow>:
+        <div></div>}
+        </>
     )
 
 }

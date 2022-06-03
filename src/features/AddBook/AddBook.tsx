@@ -45,8 +45,10 @@ const AddBook: React.FC = () => {
     const [isBookSaved, setIsBookSaved] = useState(false);
     const navigate = useNavigate();
 
-
-    console.log(authorHasBeenAdded)
+    useEffect(()=>{
+        document.title="Dodaj książkę"
+    },[])
+  
     useEffect(() => {
         getAllCategories().then(categories => setCategories(categories));
         getAllAuthors().then(authors => setAuthors(authors));
@@ -86,7 +88,7 @@ const AddBook: React.FC = () => {
     }
 
     const handleAddAuthorBtn = (): void => {
-        setAddNewAuthor(true);
+        setAddNewAuthor(!addNewAuthor);
     }
 
 
@@ -146,7 +148,7 @@ const AddBook: React.FC = () => {
                                         </MenuItem>
                                     ))}
                                 </Select>
-                                <Button type="button" onClick={handleAddAuthorBtn}>Dodaj autora do listy</Button>
+                                <Button type="button" onClick={handleAddAuthorBtn}>{!addNewAuthor ? 'Dodaj autora do listy' : 'Zamknij formularz'}</Button>
                             </FormControl>
                         </Grid>
                         <Grid item xs={12} textAlign="center">

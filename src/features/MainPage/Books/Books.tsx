@@ -6,6 +6,7 @@ import {
     TableBody,
     TableCell,
     TableContainer,
+    TableFooter,
     TableHead,
     TableRow
 } from '@mui/material'
@@ -41,27 +42,36 @@ const Books: React.FC<{
 
 
     const columns: any[] = [
-        { id: 'title', label: 'Tytuł' },
-        { id: 'cathegory', label: 'Kategoria' },
+        { id: 'title', 
+        label: 'Tytuł',
+        minWidth: 170,},
+        
+        { id: 'cathegory', 
+        label: 'Kategoria',
+        minWidth: 170, },
         {
             id: 'author',
             label: 'Autor (autorzy)',
-            align: 'right'
+            align: 'right',
+            minWidth: 170,
         },
         {
             id: 'score',
             label: 'Ocena',
             align: 'right',
+            minWidth: 170,
         },
         {
             id: 'owner',
             label: 'Właściciel',
-            align: 'right'
+            align: 'right',
+            minWidth: 170,
         },
         {
             id: 'bookLend',
             label: 'Dostępność',
-            align: 'right'
+            align: 'right',
+            minWidth: 170,
         },
     ];
 
@@ -70,7 +80,7 @@ const Books: React.FC<{
 
     return (<>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer >
+            <TableContainer sx={{ maxHeight: 500 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
@@ -78,6 +88,8 @@ const Books: React.FC<{
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
+                                    width={column.minWidth}
+                                    
                                 >
                                     {column.label}
                                 </TableCell>
@@ -87,20 +99,24 @@ const Books: React.FC<{
                     <TableBody>
                         {props.data.map((book) => {
                             return (
-                                <BookRow key={book.getId()} book={book} columns={columns} forLend={props.forLend} setIsBookLended={props.setIsBookLended} />
+                                <BookRow id={book.getId()} key={book.getId()} book={book} columns={columns} forLend={props.forLend} setIsBookLended={props.setIsBookLended} />
                             );
                         })}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow >
+                            <TableCell colSpan={6}>
+                                <PaginationComponent page={props.page}
+                                    setPage={props.setPage}
+                                    rowsPerPage={props.rowsPerPage}
+                                    setRowsPerPage={props.setRowsPerPage}
+                                    maxPage={props.maxPage} />
+                            </TableCell>
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </TableContainer>
-
-            <PaginationComponent page={props.page}
-                setPage={props.setPage}
-                rowsPerPage={props.rowsPerPage}
-                setRowsPerPage={props.setRowsPerPage}
-                maxPage={props.maxPage} />
         </Paper >
-
 
     </>
     );

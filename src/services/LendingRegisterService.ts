@@ -1,5 +1,7 @@
 import Book from "../model/Book";
 import axios from "axios";
+import LendingRegister from "../model/LendingRegister";
+import { mapLendingRegisterList } from "../Converters/LendingRegisterConverter";
 
 export const setNewRegister = async(book: Book, token: string): Promise<boolean> => {
 
@@ -11,4 +13,17 @@ export const setNewRegister = async(book: Book, token: string): Promise<boolean>
     })
 
     return response.data;
+}
+
+export const showBooksIBorrowed = async(token: string): Promise<LendingRegister[]> => {
+    const response = await axios.get('http://localhost:8080/api/lendingregister/whichbookiborrowed', {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        }
+    })
+
+    const register = mapLendingRegisterList(response.data);
+
+    return register;
 }

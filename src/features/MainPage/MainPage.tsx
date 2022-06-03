@@ -29,7 +29,7 @@ const MainPage: React.FC = (): JSX.Element => {
     }, [user, page, rowsPerPage])
 
     return (
-        <Grid container spacing={4} sx={{ paddingLeft: 2 }}>
+        <Grid container spacing={2} sx={{ paddingLeft: 2 }}>
             <Grid item xs={12}>
                 <Typography variant="h3">Witaj w sąsiedzkiej bibliotece</Typography>
             </Grid>

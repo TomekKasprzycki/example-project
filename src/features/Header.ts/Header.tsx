@@ -42,21 +42,22 @@ const Header: React.FC = (): JSX.Element => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
 
-  const handleAddBookItem = () => {
+  const handleAddBookItem = (): void => {
     navigate("/addbook");
     handleClose();
   }
 
-  const handleMyAccountItem = () => {
-    navigate("/myaccount");
+  const handleMyAccountItem = (): void => {
+    navigate("/useraccount");
     handleClose();
   }
 
-  const handleLogoutButton = () => {
+  const handleLogoutButton = (): void => {
+
     logoutUser(token).then(res => {
       if (res) {
         dispach(removeUseFromState())

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Grid, 
     Typography,
@@ -7,6 +7,10 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound: React.FC = () => {
+
+    useEffect(() => {
+        document.title="Nie odnaleziono strony o podanym adresie!"
+    },[])
 
     const navigate = useNavigate();
 

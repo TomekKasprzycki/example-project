@@ -44,7 +44,7 @@ const PaginationComponent: React.FC<{
     return (
         <Grid container sx={{ maxHeight: 25 }}>
             <Grid item>
-                <Typography variant="body1" component="div" sx={{ flexGrow: 1, textAlign: "right", padding: 1 }}>Podaj ilość ksiażek do wyświetlenie</Typography>
+                <Typography variant="body1" component="div" sx={{ flexGrow: 1, textAlign: "right", padding: 1 }}>Podaj ilość ksiażek do wyświetlenia na stronie</Typography>
             </Grid>
             <Grid item xs={1} textAlign="right" sx={{ padding: 1 }}>
                     <Select
