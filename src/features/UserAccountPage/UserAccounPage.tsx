@@ -34,6 +34,7 @@ const UserAccounPage: React.FC = () => {
         countMyBooks(token).then(res => setMaxPage(Math.ceil(res / rowsPerPage)));
         getMyBooks(token,rowsPerPage, (rowsPerPage * (page - 1))).then(allBooks => setBooks(allBooks));
         showBooksIBorrowed(token).then(res => setMyBoorowedBooks(res));
+        setReturnBook(false);
     }, [page, rowsPerPage, returnBook])
 
     return (
