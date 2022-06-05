@@ -46,7 +46,5 @@ describe('AddBook component', () => {
 
         expect(btnCloseForm).toBeInTheDocument();
     })
-
-
 })
 
