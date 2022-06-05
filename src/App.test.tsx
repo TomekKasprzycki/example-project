@@ -1,15 +1,17 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-// import { store } from './app/store';
+import { render, screen } from '@testing-library/react';
 import App from './App';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 
-test('renders learn react link', () => {
-  const { getByText } = render(
-    // <Provider store={store}>
-      <App />
-    // </Provider>
-  );
+test('check if Header component is renderd', () => {
 
-  expect(getByText(/learn/i)).toBeInTheDocument();
+    render(
+        <Provider store={store}>
+            <App />
+        </Provider>
+
+    )
+    const applicationTitle = screen.getByText("Sąsiedzka biblioteka");
+
+    expect(applicationTitle).toBeInTheDocument();
 });

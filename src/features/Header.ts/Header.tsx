@@ -58,12 +58,9 @@ const Header: React.FC = (): JSX.Element => {
 
   const handleLogoutButton = (): void => {
 
-    logoutUser(token).then(res => {
-      if (res) {
-        dispach(removeUseFromState())
-        dispach(removeToken())
-      }
-    }).then(() => navigate("/"))
+    dispach(removeUseFromState())
+    dispach(removeToken())
+    logoutUser(token).then(res => navigate("/"))
 
       ;
     navigate("/");

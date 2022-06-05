@@ -16,14 +16,24 @@ export const setNewRegister = async(book: Book, token: string): Promise<boolean>
 }
 
 export const showBooksIBorrowed = async(token: string): Promise<LendingRegister[]> => {
-    const response = await axios.get('http://localhost:8080/api/lendingregister/whichbookiborrowed', {
+    const response = await axios.get('http://localhost:8080/api/lendingregister/showregister', {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        }
+    })
+    const register = mapLendingRegisterList(response.data);
+    return register;
+}
+
+export const returnBook = async(register: LendingRegister, token: string): Promise<boolean> => {
+    
+    const response = await axios.post('http://localhost:8080/api/lendingregister/returnbook', register, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": token
         }
     })
 
-    const register = mapLendingRegisterList(response.data);
-
-    return register;
+    return response.status === 200;
 }

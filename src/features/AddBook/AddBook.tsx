@@ -30,7 +30,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const AddBook: React.FC = () => {
+const AddBook: React.FC = (): JSX.Element => {
 
     const user: User = useAppSelector(showActiveUser).activeUser;
     const [categories, setCategories] = useState(new Array<Category>());

@@ -1,6 +1,15 @@
 import {
-    Button, Grid, TextField, Typography
+    Button, 
+    Grid, 
+    TextField, 
+    Typography, 
+    InputAdornment, 
+    IconButton
 } from '@mui/material';
+import {
+    Visibility,
+    VisibilityOff
+} from '@mui/icons-material';
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
@@ -20,6 +29,8 @@ const Login: React.FC = (): JSX.Element => {
     const dispach = useAppDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const formHandler = (data: any): void => {
 
@@ -29,9 +40,7 @@ const Login: React.FC = (): JSX.Element => {
         loginUser(user)
             .then(res => {
                 if (res) {
-                    console.log(res)
                     let token = `Bearer ${res}`
-                    console.log(token)
                     dispach(addToken(token))
                     readToken(res);
                     navigate("/");
@@ -69,6 +78,10 @@ const Login: React.FC = (): JSX.Element => {
         }
     }
 
+    const handleClickShowPassword = (): void => {
+        setShowPassword(!showPassword);
+    }
+
 
     return (
         user.getId() === 0 ?
@@ -86,27 +99,39 @@ const Login: React.FC = (): JSX.Element => {
                                 onChange={inputLoginChangeHandler}
                                 variant="outlined"
                                 label="Wpisz login"
-                                inputProps={{ style: { textAlign: "center" } }}
+                                inputProps={{ style: { textAlign: "center", width: 250 } }}
                                 helperText={errors.username?.type === 'required' && "Username is requierd"}
                             />
                         </Grid>
                         <Grid item xs={12} textAlign="center" sx={{ marginBottom: 2 }}>
                             <TextField {...register("password", { required: "requierd" })}
-                                id="input-name"
-                                type="password"
+                                id="input-password"
+                                type={showPassword ? "text" : "password"}
                                 inputRef={inputRef}
                                 onChange={inputPasswordChangeHandler}
                                 variant="outlined"
                                 label="Wpisz hasło"
-                                inputProps={{ style: { textAlign: "center" } }}
+                                inputProps={{ style: { textAlign: "center", width: 214 } }}
                                 helperText={errors.username?.type === 'required' && "Password is requierd"}
+                                InputProps={{
+                                    endAdornment:   < InputAdornment position="end" >
+                                                        <IconButton
+                                                            aria-label="toggle password visibility"
+                                                            onClick={handleClickShowPassword}
+                                                            onMouseDown={handleClickShowPassword}
+                                                            edge="end"
+                                                        >
+                                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                }}
                             />
-                        </Grid>
-                        <Grid item xs={12} textAlign="center">
-                            <Button type="submit" disabled={!loginInputState && !passwordInputState} variant="contained" >Zaloguj</Button>
-                        </Grid>
-                    </form>
                 </Grid>
+                <Grid item xs={12} textAlign="center">
+                    <Button type="submit" disabled={!loginInputState && !passwordInputState} variant="contained" >Zaloguj</Button>
+                </Grid>
+            </form>
+                </Grid >
 
                 <Grid item xs={12} textAlign="center">
                     <Typography variant="h5">Nie masz jesz konta? Załóż je szybko!</Typography>
@@ -117,8 +142,8 @@ const Login: React.FC = (): JSX.Element => {
                 <Grid item xs={12} textAlign="center">
                     <Button type="button" variant="outlined" onClick={() => { navigate("/registration") }}>Załóż konto</Button>
                 </Grid>
-            </Grid> :
-            <div>Jesteś już zalgowany!</div>
+            </Grid > :
+<div>Jesteś już zalgowany!</div>
     )
 }
 

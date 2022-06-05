@@ -25,22 +25,6 @@ const Books: React.FC<{
 }> = (props): JSX.Element => {
 
 
-
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number,
-    ) => {
-        props.setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        props.setRowsPerPage(parseInt(event.target.value, 10));
-        props.setPage(0);
-    };
-
-
     const columns: any[] = [
         { id: 'title', 
         label: 'Tytuł',
@@ -74,9 +58,6 @@ const Books: React.FC<{
             minWidth: 170,
         },
     ];
-
-    console.log(props.page)
-    console.log(props.rowsPerPage)
 
     return (<>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>

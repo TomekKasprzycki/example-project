@@ -4,6 +4,8 @@ import { persistReducer, persistStore } from 'redux-persist';
 import LoginSlice from '../features/Login/LoginSlice';
 import TokenSlice from '../features/Login/TokenSlice';
 import thunk from 'redux-thunk';
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
+
 
 // const persistConfig = {
 //   key: 'root',
@@ -23,12 +25,17 @@ import thunk from 'redux-thunk';
 // });
 
 // export let persistor = persistStore(store)
+const customizedMiddleware = getDefaultMiddleware({
+  serializableCheck: false
+})
+
 
 export const store = configureStore({
   reducer: {
   activeUser: LoginSlice,
   currentToken: TokenSlice,
-}});
+}
+});
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

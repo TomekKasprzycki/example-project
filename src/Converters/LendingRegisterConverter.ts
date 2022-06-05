@@ -6,8 +6,8 @@ const mapLendingRegister = (object: any): LendingRegister => {
 
     return (new LendingRegister(
         object.id,
-        mapUser(object.user),
-        mapBook(object.book),
+        mapUser(object.userDto),
+        mapBook(object.bookDto),
         object.dateOfLend,
         object.dateOfReturn
     ));

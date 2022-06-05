@@ -16,7 +16,7 @@ import {
   Routes
 } from 'react-router-dom';
 import './App.css';
-import Grid from '@mui/material/Grid/Grid';
+import { Grid } from '@mui/material';
 import User from './model/User';
 import { useAppSelector } from './app/hooks';
 import { showActiveUser } from './features/Login/LoginSlice';
@@ -26,7 +26,6 @@ import { useEffect, useState } from 'react';
 const App: React.FC = () => {
 
   const user: User = useAppSelector(showActiveUser).activeUser;
-
   const [auth, setAuth] = useState(false);
 
   useEffect(() => {

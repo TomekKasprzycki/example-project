@@ -6,13 +6,10 @@ import { getAllBooks, countAllBook } from '../../services/BookService';
 import Book from "../../model/Book";
 import { Typography, Grid, Fade } from "@mui/material";
 import Books from "./Books/Books";
-import { showCurrentToken } from "../Login/TokenSlice";
-
 
 const MainPage: React.FC = (): JSX.Element => {
 
     useEffect(() => { document.title = "Strona główna" }, []);
-    const token: string = useAppSelector(showCurrentToken).currentToken;
     const user: User = useAppSelector(showActiveUser).activeUser;
 
     const [books, setBooks] = useState(new Array<Book>());
@@ -21,11 +18,9 @@ const MainPage: React.FC = (): JSX.Element => {
     const [maxPage, setMaxPage] = useState(5);
 
     useEffect(() => {
-
         setMaxPage(Math.ceil(21 / rowsPerPage))
         countAllBook().then(res => setMaxPage(Math.ceil(res / rowsPerPage)));
         getAllBooks(rowsPerPage, (rowsPerPage * (page - 1))).then(allBooks => setBooks(allBooks));
-
     }, [user, page, rowsPerPage])
 
     return (

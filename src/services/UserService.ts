@@ -9,15 +9,13 @@ export const loginUser = async (loginUser: User): Promise<string> => {
             "TYPE":"Login"
         },
     })
-    console.log(response)
+
     const token = response.data
-    console.log(token)
     
     return token;
 }
 
 export const logoutUser = async (token: string): Promise<boolean> => {
-    console.log("Wyloguje")
 
     const url = 'http://localhost:8080/api/authentication/logout';
     const response = await axios.get(url, {

@@ -30,12 +30,11 @@ const UserAccounPage: React.FC = () => {
     const [returnBook, setReturnBook] = useState(false);
 
     useEffect(() => {
-
         setMaxPage(Math.ceil(21 / rowsPerPage))
         countMyBooks(token).then(res => setMaxPage(Math.ceil(res / rowsPerPage)));
         getMyBooks(token,rowsPerPage, (rowsPerPage * (page - 1))).then(allBooks => setBooks(allBooks));
         showBooksIBorrowed(token).then(res => setMyBoorowedBooks(res));
-    }, [page, rowsPerPage])
+    }, [page, rowsPerPage, returnBook])
 
     return (
         <Grid container spacing={2} sx={{ paddingLeft: 2, paddingRight: 2}}>
