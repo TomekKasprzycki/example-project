@@ -1,13 +1,13 @@
-import User from "../model/User";
+import { sampleUser, User } from "../model/User";
 import { loginUserToState } from "../features/Login/LoginSlice";
 
 
 export const readToken = (token: string, dispach: any): void => {
         const tokenData: any = JSON.parse(atob(token.split('.')[1]));
-        const loggedUser = new User(0, "", "", "", "", "", true)
-        loggedUser.setId(tokenData.id);
-        loggedUser.setLogin(tokenData.email);
-        loggedUser.setName(tokenData.name);
-        loggedUser.setRole(tokenData.role);
+        const loggedUser = sampleUser;
+        loggedUser.id = tokenData.id;
+        loggedUser.login = tokenData.email;
+        loggedUser.name = tokenData.name;
+        loggedUser.role = tokenData.role;
         dispach(loginUserToState(loggedUser))
     }

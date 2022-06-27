@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import User from "../../model/User";
+import { User } from "../../model/User";
 import Book from "./../../model/Book";
 import {
     Grid,
@@ -33,8 +33,8 @@ const AdminPanel: React.FC = () => {
                 <Typography variant="h4">Panel administracyjny</Typography>
             </Grid>
             <Grid item xs={12}>
-                <Typography variant="h6">Podany email (login): <span>{user.getLogin()}</span></Typography>
-                <Typography variant="h6">Twoje imię i nazwisko : <span>{user.getName()}</span></Typography>
+                <Typography variant="h6">Podany email (login): <span>{user.login}</span></Typography>
+                <Typography variant="h6">Twoje imię i nazwisko : <span>{user.name}</span></Typography>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant="h6">Poniżej lista Użytkowników servisu:</Typography>

@@ -35,7 +35,7 @@ return(
         {props.register.getBook().getTitle() }
     </TableCell>
     <TableCell key={props.columns[1].id} align='right'>
-        {props.register.getUser().getName()}
+        {props.register.getUser().name}
     </TableCell>
     <TableCell key={props.columns[2].id} align='right'>
         {niceLookingDate(props.register.getDateOfLend().toString())}

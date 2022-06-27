@@ -1,13 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import User from '../../model/User';
+import { User } from '../../model/User';
 
 interface loginSliceState {
     activeUser: User;
 }
 
 const initialState: loginSliceState = {
-    activeUser: new User(0,"","","","","",false)
+    activeUser: {
+      id: 0,
+      login: "",
+      name: "",
+      password: "",
+      password2: "",
+      role: "",
+      active: false,
+  }
 }
 
 export const loginSlice = createSlice({

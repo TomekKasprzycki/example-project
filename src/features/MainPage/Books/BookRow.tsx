@@ -5,7 +5,6 @@ import {
     Typography,
     Button
 } from '@mui/material';
-import User from "../../../model/User";
 import Book from "../../../model/Book";
 import Author from "../../../model/Author";
 import { useAppSelector } from "../../../app/hooks";
@@ -60,7 +59,7 @@ const BookRow: React.FC<{ id:number, book: Book, columns: any[], forLend: boolea
                 {props.book.getScore()}
             </TableCell>
             <TableCell key={props.columns[4].id} align={props.columns[4].align}>
-                {props.book.getOwner().getName()}
+                {props.book.getOwner().name}
             </TableCell>
             <TableCell key={props.columns[5].id} align={props.columns[5].align}>
                 {props.forLend ? <Button type="button" onClick={handleBookLendButton}>Pożycz</Button>

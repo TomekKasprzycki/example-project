@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import User from "../../model/User";
+import { User } from "../../model/User";
 import { useAppSelector } from "../../app/hooks";
 import { showActiveUser } from "../Login/LoginSlice";
 import { getAllBooks, countAllBook } from '../../services/BookService';

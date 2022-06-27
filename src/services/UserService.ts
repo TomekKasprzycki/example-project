@@ -1,4 +1,4 @@
-import User from "../model/User";
+import { User } from "../model/User";
 import axios from "axios";
 
 export const loginUser = async (loginUser: User): Promise<string> => {

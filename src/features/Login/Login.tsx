@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { loginUserToState, showActiveUser } from './LoginSlice';
-import User from "../../model/User";
+import { sampleUser, User } from "../../model/User";
 import { loginUser } from "../../services/UserService";
 import { addToken } from './TokenSlice';
 
@@ -34,8 +34,8 @@ const Login: React.FC = (): JSX.Element => {
 
     const formHandler = (data: any): void => {
 
-        user.setLogin(data.login);
-        user.setPassword(data.password);
+        user.login = data.login;
+        user.password = data.password;
 
         loginUser(user)
             .then(res => {
@@ -54,11 +54,11 @@ const Login: React.FC = (): JSX.Element => {
 
     const readToken = (token: string): void => {
         const tokenData: any = JSON.parse(atob(token.split('.')[1]));
-        const loggedUser = new User(0, "", "", "", "", "", true)
-        loggedUser.setId(tokenData.id);
-        loggedUser.setLogin(tokenData.email);
-        loggedUser.setName(tokenData.name);
-        loggedUser.setRole(tokenData.role);
+        const loggedUser: User = { ...sampleUser };
+        loggedUser.id = tokenData.id;
+        loggedUser.login = tokenData.email;
+        loggedUser.name = tokenData.name;
+        loggedUser.role = tokenData.role;
         dispach(loginUserToState(loggedUser))
     }
 
@@ -84,7 +84,7 @@ const Login: React.FC = (): JSX.Element => {
 
 
     return (
-        user.getId() === 0 ?
+        user.id === 0 ?
             <Grid container spacing={6}>
                 <Grid item xs={12} textAlign="center">
                     <Typography variant="h4">Podaj swój login i hasło</Typography>

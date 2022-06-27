@@ -10,7 +10,7 @@ const mapBook = (object: any): Book => {
                     mapAuthors(object.authors),
                     mapCategory(object.category),
                     object.score,
-                    mapUser(object.owner),
+                    object.owner,
                     object.bookLended);
 }
 

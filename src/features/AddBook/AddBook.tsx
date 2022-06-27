@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import User from "../../model/User";
+import { User } from "../../model/User";
 import Category from "../../model/Category";
 import Author from "../../model/Author";
 import Book from "./../../model/Book";

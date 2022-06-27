@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import User from "../../model/User";
+import { sampleUser, User } from "../../model/User";
 import {
     Button,
     TextField,
@@ -23,7 +23,7 @@ const Registration: React.FC = () => {
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [isPasswordGiven, setIsPasswordGiven] = useState(false);
-    const [newUser, setNewUser] = useState<User>(new User(0, "", "", "", "", "", false));
+    const [newUser, setNewUser] = useState<User>(sampleUser);
     const [successfulRegistration, setSuccessfulRegistration] = useState(false);
     const [isProblem, setIsProblem] = useState(false);
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Registration: React.FC = () => {
 
     useEffect(() => {
 
-        if (newUser.getLogin() !== '') {
+        if (newUser.login !== '') {
             registerUser(newUser).then(res => {
                 if (res) {
                     setSuccessfulRegistration(true)
@@ -81,11 +81,11 @@ const inputPassword2ChangeHandler = (event: any): void => {
 }
 
 const handleFormOnSubmit = (data: any): void => {
-    const createdUser = new User(0, "", "", "", "", "", false)
-    createdUser.setLogin(data.login);
-    createdUser.setName(data.name);
-    createdUser.setPassword(data.password);
-    createdUser.setPassword2(data.password2);
+    const createdUser = sampleUser;
+    createdUser.login = data.login;
+    createdUser.name = data.name;
+    createdUser.password = data.password;
+    createdUser.password2 = data.password2;
     setNewUser(createdUser);
 }
 
@@ -172,7 +172,7 @@ return (
                     <Typography variant="h4" >Doskonale! Twoje konto zostało założone.</Typography>
                 </Grid>
                 <Grid item xs={12} textAlign="center">
-                    <Typography variant="body1" >Na podany przez Ciebie adres /<span>{newUser.getLogin()}</span>/ został wysłany link aktywacyjny.</Typography>
+                    <Typography variant="body1" >Na podany przez Ciebie adres /<span>{newUser.login}</span>/ został wysłany link aktywacyjny.</Typography>
                 </Grid>
                 <Grid item xs={12} textAlign="center">
                     <Typography variant="body1" >Teraz wystaczy, że w niego klikniesz i kontro będzie aktywne, a na Ciebie czekać będzie masa książek do wypożyczenia i przeczytania!</Typography>

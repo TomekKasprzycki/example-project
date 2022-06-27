@@ -17,7 +17,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import { Grid } from '@mui/material';
-import User from './model/User';
+import { User } from './model/User';
 import { useAppSelector } from './app/hooks';
 import { showActiveUser } from './features/Login/LoginSlice';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -29,7 +29,7 @@ const App: React.FC = () => {
   const [auth, setAuth] = useState(false);
 
   useEffect(() => {
-    if(user.getId() !== 0){
+    if(user.id !== 0){
       setAuth(true);
     } else {
       setAuth(false);
@@ -67,16 +67,16 @@ const App: React.FC = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/registration" element={<Registration />} />
               <Route path="/addbook" element={
-                <ProtectedRoute hasRole={user.getRole()} outlet={<AddBook />} login={<NeedLoginPage />} />
+                <ProtectedRoute hasRole={user.role} outlet={<AddBook />} login={<NeedLoginPage />} />
               } />
               <Route path="/lendbook" element={
-                <ProtectedRoute hasRole={user.getRole()} outlet={<LendBook />} login={<NeedLoginPage />} />
+                <ProtectedRoute hasRole={user.role} outlet={<LendBook />} login={<NeedLoginPage />} />
               } />
               <Route path="/useraccount" element={
-                <ProtectedRoute hasRole={user.getRole()} outlet={<UserAccounPage />} login={<NeedLoginPage />} />
+                <ProtectedRoute hasRole={user.role} outlet={<UserAccounPage />} login={<NeedLoginPage />} />
               } />
               <Route path="/adminPanel" element={
-                <AdminRoute hasRole={user.getRole()} outlet={<AdminPanel />} login={<NeedLoginPage />} />
+                <AdminRoute hasRole={user.role} outlet={<AdminPanel />} login={<NeedLoginPage />} />
               } />
               <Route path='*' element={<PageNotFound />} />
             </Routes>

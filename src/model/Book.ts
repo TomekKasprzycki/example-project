@@ -1,6 +1,6 @@
 import Author from './Author';
 import Category from './Category';
-import User from './User';
+import { User } from './User';
 
 
 class Book {

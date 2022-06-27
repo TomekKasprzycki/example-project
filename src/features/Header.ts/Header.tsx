@@ -11,7 +11,7 @@ import {
   MenuList
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import User from "./../../model/User";
+import { User } from "./../../model/User";
 import { logoutUser } from "./../../services/UserService";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -26,7 +26,7 @@ const Header: React.FC = (): JSX.Element => {
   const dispach = useAppDispatch();
 
   useEffect(() => {
-    setAuth(user.getId() === 0)
+    setAuth(user.id === 0)
   }, [user])
 
   const navigate = useNavigate();
